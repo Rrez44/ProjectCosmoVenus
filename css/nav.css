@@ -1,0 +1,51 @@
+@media (max-width: 991.98px) {
+
+
+    /* Adjust this value based on your breakpoint */
+    .navbar .search-form .form-control {
+
+        min-width: 0;
+        height: 40px;
+        width: 50px;
+        margin-right: 0px;
+        padding-left: 10px;
+    }
+
+    .navbar .search-form .input-group-prepend .input-group-text {
+        height: 40px;
+        width: 35px;
+    }
+
+    .navbar .search-form .btn {
+
+        height: 40px;
+        width: 80px;
+    }
+}
+
+@media (max-width: 576px) {
+
+
+    /* Adjust this value based on your breakpoint */
+    .navbar .search-form .form-control {
+
+        min-width: 0;
+        height: 40px;
+        width: 50px;
+        margin-right: 0px;
+        padding-left: 10px;
+    }
+
+    .navbar .search-form .input-group-prepend .input-group-text {
+        height: 40px;
+        width: 35px;
+    }
+
+    .navbar .search-form .btn {
+        position: relative;
+        height: 40px;
+        width: 80px;
+        bottom: 8px;
+
+    }
+}
