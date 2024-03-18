@@ -1,0 +1,169 @@
+body{
+
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(15,15,15,1) 29%, rgba(26,26,26,1) 55%, rgba(36,36,36,1) 80%, rgba(46,46,46,1) 100%);
+}
+
+
+
+[class *="col"]{
+    background-color: var(#121212, #ffffff);
+    text-align: center;
+    margin-top: 200px;
+}
+
+
+.info{
+    background-color: var(#121212, #ffffff);
+    text-decoration: none; 
+    text-align: center;
+    box-shadow: 0;
+    outline: none;
+    border: none;
+    padding: 5px;
+    background-color: white;
+    font-family: "Almarai", sans-serif;
+    width: 300px;
+}
+.info2{
+    
+    width: 150px;
+}
+
+.sbtbutton{
+    border: 1px solid #1DB954;
+    width: 300px;
+    background-color: #1DB954;
+    color: white;
+}
+.sbtbutton:hover{
+    border: 1px solid #127334;
+    transition: 0.50s ease-in;
+    background-color: #127334;
+}
+.loginTxt{
+    background-color: var(#121212, #ffffff);
+    color: white;
+    font-family: "Moul", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+
+[class *="row"]{
+    background-color: var(#121212, #ffffff);
+    margin-top: 150px;
+}
+
+[class *="col-md-3"]{
+    width: 50px;
+}
+ .square-box{
+    background-color: var(#121212, #ffffff); 
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+    margin-top: 100px;
+    max-width: 800px;
+    height:500px;
+    background-image: none;
+} 
+.goToRegister{
+    color:  #1DB954;
+    text-decoration: none;
+}
+.goToRegister:hover{
+    border-bottom: 1px solid #127334 ;
+    transition: 1.50s ease-in;
+} 
+
+  *:focus {
+    outline-style: none;
+  }
+
+    #progressBar {
+    height: 6px;
+    width: 300px;
+    align-content: center;
+    justify-content: center;
+  
+    margin-top: 0.6em; 
+    border-radius:50px; 
+    border:2px solid #ddd 
+  }  
+
+  #progress-bar {
+    width: 0%;
+    height: 100%;
+    transition: width 500ms linear;
+    border-radius:50px;
+    box-shadow:0px 1px 5px #555
+  }
+
+  .progress-bar-danger {
+    background: #d00;
+  }
+
+  .progress-bar-warning {
+    background: #f50;
+  }
+
+  .progress-bar-success {
+    background: #080;
+  }
+
+  
+
+  .firstParagraph{
+    /* margin-left: 100px; */
+    margin-top: 30px;
+    position: absolute;
+  }
+ 
+
+
+
+   .days{
+    /* text-align: justify;   */
+    border: none;
+    width: 40px;
+    margin-left: 25px;
+    padding: 2px;  
+  } 
+
+  .months{
+    border: none;
+    padding-top: 5px;
+    padding-left: 60px; 
+    width: 150px;
+    border: none;
+    /* margin-left: -30px; */
+  }  
+
+  .years{
+    border: none;
+    width: 60px;
+    /* margin-right: 10px; */
+    margin-right: 20px;
+    /* margin-right: 40px; */
+    padding: 2px;
+  } 
+  @media all and (max-width:760px){
+    #progressBar {
+    position: fixed !important;
+    left: 50% !important;
+    margin-top: 3px !important;
+    transform: translate(-50%) !important;
+    
+    }
+  }
+  .col-md-auto {
+    flex: 1;
+    max-width: 100px; /* Adjust the width as needed */
+    /* margin: 0 5px;  */
+}
+
+
+.custom-col{
+  flex: 0 0 100px; /* Set a fixed width of 100px for each column */
+
+}

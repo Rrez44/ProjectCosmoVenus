@@ -1,0 +1,93 @@
+body{
+
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(15,15,15,1) 29%, rgba(26,26,26,1) 55%, rgba(36,36,36,1) 80%, rgba(46,46,46,1) 100%);
+}
+
+
+
+[class *="col"]{
+    background-color: var(#121212, #ffffff);
+    text-align: center;
+    margin-top: 100px;
+    margin: 0px;
+}
+
+
+.info{
+    text-decoration: none;
+    color: black; 
+    text-align: center;
+    box-shadow: 0;
+    border: none;
+    border-bottom: 1px solid white;
+    outline: none;
+    padding: 5px;
+    font-family: "Almarai", sans-serif;
+    width: 300px;
+}
+
+.sbtbutton{
+    border: 1px solid #1DB954;
+    width: 300px;
+    background-color: #1DB954;
+    color: white;
+}
+.sbtbutton:hover{
+    border: 1px solid #127334;
+    transition: 0.50s ease-in;
+    background-color: #127334;
+}
+.loginTxt{
+    background-color: var(#121212, #ffffff);
+    color: white;
+    font-family: "Moul", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+
+[class *="row"]{
+    background-color: var(#121212, #ffffff);
+    margin-top: 100px;
+}
+
+[class *="col-md-4"]{
+    margin-top: 200px;
+}
+
+
+ .square-box{
+    background-color: var(#121212, #ffffff); 
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+    margin-top: 150px;
+    max-width: 800px;
+    height:400px;
+    background-image: none;
+    align-items: center;
+} 
+.goToRegister{
+    color:  #1DB954;
+    text-decoration: none;
+}
+.goToRegister:hover{
+    border-bottom: 1px solid #127334 ;
+    transition: 1.50s ease-in;
+} 
+
+.firstParagraph{
+    color: white;
+}
+
+
+.forgotPassword{
+    color: white; 
+    text-decoration: none;
+    margin-left: -180px;
+    width: 150px;
+}
+
+.forgotPassword:hover{
+    color: #1DB954;
+}
