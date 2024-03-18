@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+.profile-component {
+    background-color: transparent;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-sizing: border-box;
+    margin: 0;
+    max-width: 355px;
+    max-height: 500px;
+}
+
+.profile-component h3 {
+    margin: 10px 0;
+}
+
+.profile-component h6 {
+    margin: 5px 0;
+    text-transform: uppercase;
+}
+
+.profile-component p {
+    font-size: 14px;
+    line-height: 21px;
+    max-width: 320px;
+}
+
+.profile-component .card-container {
+    background-color: #212529;
+    border-radius: 5px;
+    box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 0.75);
+    color: #B3B8CD;
+    padding-top: 30px;
+    position: relative;
+    width: 350px;
+    max-width: 100%;
+    text-align: center;
+    border-radius: 3%;
+}
+
+
+.profile-component .card-container .round {
+    border: 1px solid #1DB954;
+    border-radius: 50%;
+    padding: 7px;
+    max-width: 120px;
+    max-height: 120px;
+}
+
+.profile-component button.primary {
+    background-color: #1DB954;
+    border: 1px solid #1DB954;
+    border-radius: 3px;
+    color: #231E39;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    padding: 10px 25px;
+}
+
+.profile-component button.primary.ghost {
+    background-color: transparent;
+    color: #02899C;
+}
+
+.profile-component .skills {
+    background-color: #1DB954;
+    text-align: left;
+    padding: 15px;
+    margin-top: 30px;
+    color: #212529;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.profile-component .skills ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-component .skills ul li {
+    border: 1px solid #1a1a1d;
+    border-radius: 2px;
+    display: inline-block;
+    font-size: 12px;
+    margin: 0 7px 7px 0;
+    padding: 7px;
+}
+
+@media (min-width: 1px) and (max-width: 1024px) {
+    .profile-component {
+        margin-bottom: 20px;
+    }
+}
