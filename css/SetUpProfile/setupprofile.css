@@ -1,0 +1,122 @@
+.sameStyle{
+    margin-top: 0px;
+    margin-left:50px ;
+    /* background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important; */
+    /* background-color: ; */
+}
+
+
+.inputSame{
+    background-color:#222222 !important;
+    color: white;
+    width: 300px;
+    border: none;
+    outline: none;
+    padding:5px;
+    border-radius: 2px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+
+}
+
+.sameStyleParagraph{
+    margin-left:50px ;
+    margin-top: 20px;
+}
+
+.allParagraphs{
+    color: white ;
+
+}
+
+
+.lineWidth{
+    color: white;
+    margin-left: 60px;
+    width: 300px;
+}
+.allParagraphs2{
+    position: absolute;
+    margin-left:300px ;
+    float: right;
+    color: white;
+}
+
+.inputSame2{
+    margin-left: 300px;
+    color: black;
+    display: none;
+    
+}
+
+input::file-selector-button {
+    background-color:#222222 !important;
+    color: white;
+    border: none;
+    outline: none;
+    padding:5px;
+    /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4); */
+    /* box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); */
+    border-radius: 2px;
+
+    
+  }
+
+  .lineWidth2{
+    color: white;
+    margin-top: -16.4px;
+    margin-left:600px ;
+    width: 300px;
+  }
+  
+input[type='file'] {
+    color: rgba(0, 0, 0, 0);
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+    text-align: center;
+  }
+
+
+
+
+  .selectHobbies{
+    margin-left: 310px;
+  }
+
+
+  .labelBtn{
+    margin-top: -1px;
+    /* padding: 2px; */
+    padding: 0;
+    height: 35px;
+    color: white;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+    background-color:#222222 !important;
+        text-align: center;
+    width: 300px;
+    margin-left: 75px;
+  }
+
+
+  .lastButtons{
+    margin-top: -1px;
+    padding: 0;
+    height: 35px;
+    color: white;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+    background-color:#222222 !important;
+    text-align: center;
+    width: 150px;
+    /* margin-left: 275px; */
+    border: none;
+    outline: none;
+  }
+
+  .lastButtonsSubmit{
+    margin-left: 220px;
+    background-color: #1DB954 !important;
+  }
+
+
+  .lastButtonsDiscard{
+    margin-left: 290px;
+    position: relative;
+  }
