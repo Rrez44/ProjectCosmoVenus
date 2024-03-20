@@ -120,3 +120,21 @@ input[type='file'] {
     margin-left: 290px;
     position: relative;
   }
+
+  .hobbiesSelected{
+    /* margin-top: -1px; */
+    /* padding: 0; */
+    /* height: 35px; */
+    color: white !important;
+    /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4); */
+    /* background-color:#222222 !important; */
+    /* text-align: center; */
+    /* width: 150px; */
+    /* border: none; */
+    /* outline: none; */
+  }
+
+
+  .close{
+    background-color: #1DB954;
+  }
