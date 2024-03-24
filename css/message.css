@@ -1,0 +1,58 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    background-color: #222222;
+    padding-top: 80px;
+}
+
+.friend-navigation {
+    width: 70%;
+    color: #afb4c9;
+    height: 40vw;
+
+}
+
+.friend-navigation a {
+    color: #afb4c9;
+}
+
+.friend-navigation a:hover {
+    color: #e4e8ff;
+}
+
+
+
+.friend-navigation .round {
+    border: 1px solid #1DB954;
+    border-radius: 50%;
+    padding: 7px;
+    height: 75px;
+    width: 75px;
+    min-width: 75px;
+    min-height: 75px;
+    object-fit: cover;
+}
+
+
+.friend-navigation .friend-name {
+    font-size: x-large;
+    margin-left: 10px;
+
+}
+
+
+
+
+
+.friend-navigation .last-seen {
+    margin-left: 25%;
+}
+
+.friend-navigation .profile-button {
+    margin-left: auto;
+    margin-right: 8px;
+}
+
+.friend-navigation .card-body {
+    overflow-y: scroll;
+}
