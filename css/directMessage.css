@@ -1,0 +1,100 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    background-color: #222222;
+    padding-top: 80px;
+}
+
+.direct-message-component {
+    min-height: 600px;
+    color: #afb4c9;
+    width: 70%;
+    height: 40vw;
+    border-radius: 2%;
+}
+
+.direct-message-component .friend-user {
+    margin-top: 5px;
+    font-size: x-large;
+    height: 10%;
+}
+
+.direct-message-component .round {
+    border: 1px solid #1DB954;
+    border-radius: 50%;
+    padding: 7px;
+    height: 60px;
+    width: 60px;
+    min-width: 60px;
+    min-height: 60px;
+    object-fit: cover;
+}
+
+.direct-message-component .friend-name {
+    margin-left: 10px;
+    align-self: self-end;
+}
+
+.direct-message-component .direct-message-p {
+    margin-left: auto;
+    font-size: x-large;
+    align-self: self-end;
+}
+
+.direct-message-component .messages {
+    height: 75%;
+}
+
+.direct-message-component .send-message {
+    width: 70%;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.direct-message-component .submit-button {
+    border-radius: 0px 10px 10px 0px;
+}
+
+.messages {
+    overflow-y: scroll;
+}
+
+.message-left {
+    height: fit-content;
+}
+
+.message-text-left {
+    height: fit-content;
+    width: fit-content;
+    max-width: 40%;
+    background-color: #2f2f2f;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+}
+
+.message-right {
+    height: fit-content;
+}
+
+.message-text-right {
+    color: white;
+    height: fit-content;
+    width: fit-content;
+    max-width: 40%;
+    margin-left: auto;
+    background-color: #1DB954;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.date-time-message-left {
+    font-size: small;
+    margin-top: -10px;
+}
+
+.date-time-message-right {
+    margin-left: auto;
+    font-size: small;
+    text-align: right;
+    margin-top: -10px;
+}
