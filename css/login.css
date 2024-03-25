@@ -1,0 +1,13 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    background-color: #222222;
+    padding-top: 80px;
+}
+
+.login-form-jumbotron {
+    padding: 20px;
+    color: #afb4c9;
+    border-radius: 10px;
+
+}
