@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <link rel="stylesheet" hre  f="../css/nav.css">
+    <link rel="stylesheet" href="../css/nav.css">
     
     <script src="https://kit.fontawesome.com/74cd7f5a15.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -80,7 +80,15 @@
             <div class="jumbotron jumbotron-fluid d-flex justify-content-center align-items-center">
                 <div class="container-fluid">
                     <div class="card mb-3 bg-dark border-success jumbo-container">
-                                        <form id="changeInformation" action="#" method="post">
+                                       <!-- <form  action="../../php/setUpProfile.php" method="post"> -->
+                                        <!-- <input type="text" name="username"> -->
+                                        <!-- <input type="submit"> -->
+
+                                       <!-- </form> -->
+
+
+                                         <form   action="../../php/setUpProfile.php" method="post" enctype="multipart/form-data"  >
+                                          
                                             <div class="row justify-content-start sameStyleParagraph">
                                                 <div class="col-md-3"><p class="allParagraphs">Profile Name:</p></div>
                                                 
@@ -88,8 +96,8 @@
                                             </div>
                                             
                                             <div class="row justify-content-start sameStyle">
-                                                <div class="col-md-3"><input class="inputSame" name="username" type="text"></div>
-
+                                                <div class="col-md-3"><input type="text" class="inputSame" name="username" ></div>
+                                                
                                                 <div class="col-md-3"><input id="inputFile" accept="image/png, image/jpeg" name="inputfile" class="inputSame2" type="file" title=""></div>
                                                 <label for="inputFile" class="labelBtn">Choose a file</label>
 
@@ -104,8 +112,9 @@
                                             </div>
                                          
                                             <div class="row justify-content-start sameStyle" style="margin-top: 10px;">
+
                                                 <div class="col-md-3"><input class="inputSame" name="faculty" type="text"></div>
-                                                <button type="button" class="col-md-3 btn btn-primary selectHobbies inputSame" data-toggle="modal" data-target="#exampleModal">Select</button>
+                                                <button type="button" class="col-md-3 btn btn-primary selectHobbies inputSame" name="hobbies" data-toggle="modal" data-target="#exampleModal">Select</button>
                                             </div>
                                             <hr class="lineWidth"><hr class="lineWidth2">
                                             <div class="row justify-content-start sameStyleParagraph">
@@ -116,37 +125,48 @@
                                                 <div class="col-md-3"><textarea class="inputSame" name="aboutme" style="height: 150px; resize: none;"></textarea></div>
                                                 <div class="col-md-3"><input type="submit" onclick="onclickbtn()" class="lastButtons lastButtonsDiscard" value="Discard"></div>
                                                 <div class="col-md-3"><input type="submit"  class="lastButtons lastButtonsSubmit" value="Save changes"></div>
+                                               
                                             </div>
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                              <div style="background-color: #222222;" class="modal-dialog" role="document">
+                                                <div style="background-color:#222222;" class="modal-content">
+                                                  <div class="modal-header">
+                                                    <h5 class="modal-title" style="color: white;" id="exampleModalLabel">Select Hobbies</h5>
+                                                    <button style="border: none; outline: none; background-color: #222222; font-size: 30px;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    <!-- <div class="button"> -->
+                                                      <input type="radio" id="a25" name="check-substitution-1"  value="UI/UX"/>
+                                                      <label class="btn btn-default" for="a25">UI/UX</label>
+                                                    <!-- </div> -->
+                                                    <!-- <div class="button"> -->
+                                                      <input type="radio" id="a50" name="check-substitution-2" value="JAVA" />
+                                                      <label class="btn btn-default" for="a50">JAVA</label>
+                                                    <!-- </div> -->
+                                                    <!-- <div class="button"> -->
+                                                      <input type="radio" id="a75" name="check-substitution-3" value="CSS" />
+                                                      <label class="btn btn-default" for="a75">CSS</label>
+
+                                                      <input type="radio" id="a100" name="check-substitution-4" value="C++" />
+                                                      <label class="btn btn-default" for="a100">C++</label>
+                                                    <!-- </div> -->
+                                                  </ul>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+    
                                         </form>
-                                        
+                                         
 
 
 
                                         <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                          <div style="background-color: #222222;" class="modal-dialog" role="document">
-                                            <div style="background-color:#222222;" class="modal-content">
-                                              <div class="modal-header">
-                                                <h5 class="modal-title" style="color: white;" id="exampleModalLabel">Select Hobbies</h5>
-                                                <button style="border: none; outline: none; background-color: #222222; font-size: 30px;" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                  <span aria-hidden="true">&times;</span>
-                                                </button>
-                                              </div>
-                                              <div class="modal-body">
-     
-                                           <button type="submit" class="hobbiesSelected btn btn-dark" value="UI/UX">UI/UX</button>
-                                                <button class="hobbiesSelected btn btn-dark" value="C++">C++</button>
-                                                <button class="hobbiesSelected btn btn-dark" value="Python">Python</button>
-                                                <button class="hobbiesSelected btn btn-dark" value="JS">JS</button>
-                                                <button class="hobbiesSelected btn btn-dark" value="UI">UI</button>
-                                                
-                                              </div>
-                                              <div class="modal-footer">
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-
+                                        
 
                             
                                       </div>
@@ -167,8 +187,24 @@
   </div>
 </body>
 
+<script>
+    const radioButtons = document.querySelectorAll('input[type="radio"]');
+    
+    // Add event listener to each radio button
+    radioButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            // If the radio button is already checked, uncheck it
+            if (this.getAttribute('data-checked') === 'true') {
+                this.checked = false;
+                this.setAttribute('data-checked', 'false');
+            } else {
+                // Otherwise, mark it as checked
+                this.setAttribute('data-checked', 'true');
+            }
+        });
+    });
+</script>
 
-
-<script src="../../JS/setUpprofile.js"></script>
+<!-- <script src="../../JS/setUpprofile.js"></script> -->
 
 </html>

@@ -2,6 +2,7 @@
 
   document.getElementById("changeInformation").addEventListener("submit",function(event){
     event.preventDefault();
+    console.log("Form submited");
 
     const formData = new FormData(event.target);
 
@@ -12,7 +13,7 @@
 
     const getu = URL.createObjectURL(profilePicture);
     console.log(getu)
-
+    console.log(username);
     if(username !=""){
     const changeUsername = document.getElementById("name");
     changeUsername.innerHTML = username;
@@ -35,7 +36,7 @@
     
     var allinputs =document.querySelectorAll(".inputSame");
     allinputs.forEach(singleinput =>singleinput.value="");
- 
+    this.submit();
   });
   var clickCount={};
 
@@ -63,3 +64,14 @@
  
 
   }
+
+
+  const radioButtons = document.querySelectorAll('input[type="radio"]');
+    
+  radioButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+          if (this.checked) {
+              this.checked = false;
+          }
+      });
+  });

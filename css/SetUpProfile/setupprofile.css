@@ -138,3 +138,62 @@ input[type='file'] {
   .close{
     background-color: #1DB954;
   }
+
+  /* .button {
+    float: left;
+    margin: 0 5px 0 0;
+    width: 100px;
+    height: 40px;
+    position: relative;
+  }
+  
+  .button label,
+  .button input {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .button input[type="radio"] {
+    opacity: 0.011;
+    z-index: 100;
+  }
+  
+  .button input[type="radio"]:checked + label {
+    background: #20b8be;
+    border-radius: 4px;
+  }
+  
+  .button label {
+    cursor: pointer;
+    z-index: 90;
+    line-height: 1.8em;
+  }
+   */
+
+input[type="radio"] {
+  display: none;
+}
+
+/* Style the label */
+label {
+  margin-top: 10px;
+  padding: 0;
+  height: 35px;
+  color: white;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+  text-align: center;
+  width: 110px;
+  border: none;
+  outline: none;  display: inline-block;
+  padding: 5px 10px; 
+  cursor: pointer;
+}
+
+input[type="radio"]:checked + label {
+  background-color: #1DB954;
+    color: #fff; 
+}

@@ -73,7 +73,8 @@ class User {
             if (password_verify($password, $logAttempt->getPassword())){
                 $_SESSION['user_id'] = $logAttempt->getUserName();
                 $_SESSION['logged_in'] = true;
-                header('Location: /cosmovenus/views/profile.php');
+                header("Location: ../html/profile.php");
+                // header('Location: /cosmovenus/views/profile.php');
             }
             else{
                 echo "Failed to log in";
