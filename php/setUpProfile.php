@@ -27,11 +27,7 @@
     }else{
         echo "Field not set";
     }   
-
     $targetPath = $targetDirectory .$targetFile;
-    echo "TargetPath $targetPath";
-    
-
     move_uploaded_file($_FILES["inputfile"]["tmp_name"], $targetPath);
 
     class userProfileInfo{
@@ -59,7 +55,7 @@
 
 
 
-        
+
         public function saveHobbies($pdo){
         
             $sql = "insert into hobbies(username,hoby_name) values (?, ?)";
