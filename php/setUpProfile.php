@@ -56,6 +56,10 @@
             $stmt->execute();
         }
 
+
+
+
+        
         public function saveHobbies($pdo){
         
             $sql = "insert into hobbies(username,hoby_name) values (?, ?)";
