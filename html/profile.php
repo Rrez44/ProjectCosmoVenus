@@ -16,7 +16,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     <link rel="stylesheet" href="../css/nav.css">
     
     <script src="https://kit.fontawesome.com/74cd7f5a15.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -37,9 +37,14 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                     <li class="nav-item active">
                       <a class="nav-link mx-2" href="/message.html">Message <i class="fa-regular fa-message"></i><span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item mx-2">
-                      <a class="nav-link" href="profile.php">Profile <i class="fa-regular fa-user"></i></a>
-                    </li>
+                  <li class="nav-item dropdown" >
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Profile
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="profile.php">Visit Profile</a>
+                    <a class="dropdown-item" href="Login_Register/loginForm.html" id="logOut">Log Out</a>
+                  </li>
                     <li class="nav-item mx-2">
                       <a class="nav-link" href="#">Wink Back <i class="fa-regular fa-face-smile-wink"></i></i></a>
                     </li>
@@ -57,26 +62,16 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
               </nav>
             </div>
         </div> 
+        <!-- NAVEND -->
+        <!-- PROFILE COMPONENT STARTS HERE -->
         <div class="row justify-content-center">
             <div class="col-lg-3 d-flex justify-content-center">
                 <div class="profile-component">
                     <div class="card-container border border-success">
-                        <?php
-                            $registered = $_SESSION["user_id"];
-                            $db = new mysqli("localhost","root","1234","cosmo");
-                            $sql = "select * from usersDisplayInfo where username ='$registered' ";
-                            $result = $db->query($sql);
-                            if($result ->num_rows >0){
-                              while($row =$result->fetch_assoc()){
-                                echo "<img src='{$row['profpicture']}' class='img-fluid round' alt='Profile Picture'>";
-                                echo "<h3> {$row['profileName']} </h3> ";
-                                echo "<h6> {$row['faculty']} </h6>";
-                                echo "<p> {$row['aboutMe']} </p>";
-                              }
-                            }
-
-
-                        ?>
+                        <img class="img-fluid round" src="https://pics.craiyon.com/2023-06-20/89f79a8dee744596981e7417b8a7ea1d.webp" alt="user" />
+                        <h3>Rrezon Beqiri</h3>
+                        <h6>FIEK</h6>
+                        <p>Left my inhibitions i guess where my supervision was</p>
                         <div class="buttons">
                             <button class="primary">
                                 Message
@@ -87,20 +82,21 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                         </div>
                         <div class="skills">
                             <h6>Hobbies</h6>
-                            
                             <ul>
-                              <?php
-                                $registered = $_SESSION["user_id"];
-                                $db = new mysqli("localhost","root","1234","cosmo");
-                                $sql = "select * from hobbies where username ='$registered' ";
-                                $result = $db->query($sql);
-                                if($result ->num_rows >0){
-                                  while($row =$result->fetch_assoc()){
-                                    echo "<li> {$row['hoby_name']} </li>";
-                                  }
-                                }    
-                              ?>
-                              
+                                <li>UI / UX</li>
+                                <li>Front End Development</li>
+                                <li>HTML</li>
+                                <li>CSS</li>
+                                <li>JavaScript</li>
+                                <li>React</li>
+                                <li>Node</li>
+                                <li>UI / UX</li>
+                                <li>Front End Development</li>
+                                <li>HTML</li>
+                                <li>CSS</li>
+                                <li>JavaScript</li>
+                                <li>React</li>
+                                <li>Node</li>
                             </ul>
                         </div>
                     </div>
@@ -112,11 +108,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                     <div class="card mb-3 bg-dark border-success jumbo-container">
                         <img class="card-img-top" style="border-radius: 5% 5% 0px 0px; max-height: 200px; object-fit: cover;" src="https://wallpapers.com/images/hd/ultrawide-4k-u69bk8p5x2no56dj.jpg" alt="Card image cap">
                         <div class="card-body">
-                          <?php
-
-                          $registered ='@'. $_SESSION["user_id"];
-                            echo "<h5 class='card-title'>$registered </h5>";
-                          ?>
+                          <h5 class="card-title">@rrez44</h5>
                             <hr>
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-3 col-md-3 col-sm-6 small-screen-query d-flex justify-content-center">
@@ -245,8 +237,28 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         </div>
       </div>
     </div>
+
+       
+        
       </div>
     </div>
   </div>
+
+    <!-- LOG OUT -->
+    <script>
+        $(document).ready(function() {
+            $("#logOut").click(function(e) {
+                e.preventDefault()
+                $.ajax({
+                    type: "POST",
+                    url: "../php/logout.php",
+                    success: function(response) {
+                      window.location.href = '/cosmovenus/views/Login_Register/loginForm.html';
+                    }
+
+                });
+            });
+        });
+    </script>
 </body>
 </html>
