@@ -14,7 +14,10 @@
     <link rel="stylesheet" href="../../css/profile.css">
     <link rel="stylesheet" href="../../css/profilePictureComponent.css">
     <link rel="stylesheet" href="../../css/SetUpProfile/setupprofile.css">
-</head>
+
+    <!-- <script type="script" src="../../JS/setUpprofile.js" defer></script> -->
+
+  </head>
 <body>
     <div class="container-fluid">
         <div class="row g-0"> <!--  NAVBAR START  -->
@@ -56,9 +59,9 @@
                 <div class="profile-component">
                     <div class="card-container border border-success">
                         <img class="img-fluid round" id="profilePicture" src="https://pics.craiyon.com/2023-06-20/89f79a8dee744596981e7417b8a7ea1d.webp" alt="user" />
-                        <h3 id="name" >Rrezon Beqiri</h3>
-                        <h6 id="facultyy">FIEK</h6>
-                        <p id="aboutmee">Left my inhibitions i guess where my supervision was</p>
+                        <h3 id="name" ></h3>
+                        <h6 id="facultyy"></h6>
+                        <p id="aboutmee"></p>
                         <div class="buttons">
                             <button class="primary">
                                 Message
@@ -96,7 +99,7 @@
                                             </div>
                                             
                                             <div class="row justify-content-start sameStyle">
-                                                <div class="col-md-3"><input type="text" class="inputSame" name="username" ></div>
+                                                <div class="col-md-3"><input type="text" id="username" class="inputSame" name="username" ></div>
                                                 
                                                 <div class="col-md-3"><input id="inputFile" accept="image/png, image/jpeg" name="inputfile" class="inputSame2" type="file" title=""></div>
                                                 <label for="inputFile" class="labelBtn">Choose a file</label>
@@ -113,7 +116,7 @@
                                          
                                             <div class="row justify-content-start sameStyle" style="margin-top: 10px;">
 
-                                                <div class="col-md-3"><input class="inputSame" name="faculty" type="text"></div>
+                                                <div class="col-md-3"><input class="inputSame" id="faculty" name="faculty" type="text"></div>
                                                 <button type="button" class="col-md-3 btn btn-primary selectHobbies inputSame" name="hobbies" data-toggle="modal" data-target="#exampleModal">Select</button>
                                             </div>
                                             <hr class="lineWidth"><hr class="lineWidth2">
@@ -122,8 +125,8 @@
                                             </div>
 
                                             <div class="row justify-content-start sameStyle" style="margin-top: 10px;">
-                                                <div class="col-md-3"><textarea class="inputSame" name="aboutme" style="height: 150px; resize: none;"></textarea></div>
-                                                <div class="col-md-3"><input type="submit" onclick="onclickbtn()" class="lastButtons lastButtonsDiscard" value="Discard"></div>
+                                                <div class="col-md-3"><textarea class="inputSame" id="aboutme" name="aboutme" style="height: 150px; resize: none;"></textarea></div>
+                                                <div class="col-md-3"><input type="submit" id="discard" onclick="onclickbtn()" class="lastButtons lastButtonsDiscard" value="Discard"></div>
                                                 <div class="col-md-3"><input type="submit"  class="lastButtons lastButtonsSubmit" value="Save changes"></div>
                                                
                                             </div>
@@ -185,7 +188,10 @@
       </div>
     </div>
   </div>
-</body>
+  <script src="../../JS/setUpprofile.js" defer></script>
+
+</bod y>
+
 
 <script>
     const radioButtons = document.querySelectorAll('input[type="radio"]');
@@ -203,8 +209,18 @@
             }
         });
     });
-</script>
 
-<!-- <script src="../../JS/setUpprofile.js"></script> -->
+
+  //   const username = document.getElementById("username");
+  // const changeName = document.getElementById("name");
+
+  // const inputHandler =function(e){
+  //     changeName.innerText =e.target.value;
+  // }
+
+  //   username.addEventListener("input",inputHandler);
+  //   username.addEventListener("propertychange",inputHandler);
+
+</script>
 
 </html>
