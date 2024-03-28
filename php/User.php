@@ -1,4 +1,5 @@
 <?php
+
 class User {
     private $firstName;
     private $lastName;
@@ -73,8 +74,7 @@ class User {
             if (password_verify($password, $logAttempt->getPassword())){
                 $_SESSION['user_id'] = $logAttempt->getUserName();
                 $_SESSION['logged_in'] = true;
-                header("Location: ../html/profile.php");
-                // header('Location: /cosmovenus/views/profile.php');
+                header('Location: /cosmovenus/views/profile.php');
             }
             else{
                 echo "Failed to log in";
@@ -135,8 +135,17 @@ class User {
         $registration->bindParam(':dateOfBirth', $this->dateOfBirth);
         $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
         $registration->bindParam(':password', $hashedPassword);
-
+        $this->createImagePath();
         return $registration->execute();
+    }
+    private function createImagePath() :void {
+
+        mkdir("../images/$this->userName", 0755);
+        mkdir("../images/$this->userName/postImages", 0755);
+        mkdir("../images/$this->userName/profileImages", 0755);
+    }
+    public function loadPostPath() :string{
+        return "../images/$this->userName/postImages";
     }
 
 }

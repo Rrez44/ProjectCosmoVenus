@@ -66,14 +66,16 @@ body {
     flex-direction: column;
     justify-content: space-between;
     overflow-y: auto;
-    height: calc(35% - 1rem);
+    height: calc(20% - 1rem);
 }
 
-.post-card .card-img-top {
-    height: 70%;
+.post-container img {
+    height: 75%;
     width: 100%;
     object-fit: cover;
+    object-position: center;
 }
+
 
 .like-comment-container {
     margin-top: 5px;
