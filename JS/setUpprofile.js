@@ -124,5 +124,7 @@
       e.preventDefault();
       var allinputs =document.querySelectorAll(".inputSame");
     allinputs.forEach(singleinput =>singleinput.value="");
-    // changeInfo("","");
     })
+
+
+  

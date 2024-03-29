@@ -22,13 +22,13 @@ else {
             session_start();
             $_SESSION['user_id'] = $rUser->getUserName();
             $_SESSION['logged_in'] = true;
-            header("Location: ../html/SetUpProfile/setupprofile.html");
+            $_SESSION['first_register']=true;
+            header("Location: ../html/SetUpProfile/setupprofile.php");
             
         } else {
             echo "Failed to register user.";
         }
     } catch (Exception $e) {
-        // Now catch the Exception to print the specific error message
         echo "Failed to register user: " . $e->getMessage();
     }
 }

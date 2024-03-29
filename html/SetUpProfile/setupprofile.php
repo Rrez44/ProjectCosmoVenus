@@ -58,7 +58,36 @@
             <div class="col-lg-3 d-flex justify-content-center">
                 <div class="profile-component">
                     <div class="card-container border border-success">
-                        <img class="img-fluid round" id="profilePicture" src="https://pics.craiyon.com/2023-06-20/89f79a8dee744596981e7417b8a7ea1d.webp" alt="user" />
+                        <?php
+                          session_start();
+                            $_SESSION['first_register'];
+                            if( $_SESSION['first_register']){
+                              echo "<img src='../../images/profileIcons/anonymous.png' id='profilePicture' class='img-fluid round' alt='Profile Picture'>";
+                              echo "<h3  id='name'>  </h3> ";
+                              echo "<h6 id='facultyy'>  </h6>";
+                              echo "<p id='aboutmee'>  </p>";
+                              $_SESSION['first_register']=false;
+                                }
+                          if( $_SESSION['logged_in']){
+                            $registered = $_SESSION["user_id"];
+                            $db = new mysqli("localhost","root","1234","cosmo");
+                            $sql = "select * from usersDisplayInfo where username ='$registered' ";
+                            $result = $db->query($sql);
+                            if($result ->num_rows >0){
+                              while($row =$result->fetch_assoc()){
+                                echo "<img src='../{$row['profpicture']}' id='profilePicture' class='img-fluid round' alt='Profile Picture'>";
+                                echo "<h3  id='name'> {$row['profileName']} </h3> ";
+                                echo "<h6 id='facultyy'> {$row['faculty']} </h6>";
+                                echo "<p id='aboutmee'> {$row['aboutMe']} </p>";
+                              }
+                            
+
+                              }
+                      }
+                        
+                         ?>
+                        
+                        
                         <h3 id="name" ></h3>
                         <h6 id="facultyy"></h6>
                         <p id="aboutmee"></p>
@@ -69,11 +98,16 @@
                             <button class="primary ghost">
                                 Friends
                             </button>
-                        </div>
+                        </div> 
                         <div class="skills">
                             <h6>Hobbies</h6>
                             <ul id="HobbiesUL">
-                                
+                            <?php
+                            if($_SESSION["logged_in"]){
+                              }else{
+                                echo "<li>   </li>";
+                                }
+                              // ?>
                             </ul>
                         </div>
                     </div>
@@ -83,11 +117,7 @@
             <div class="jumbotron jumbotron-fluid d-flex justify-content-center align-items-center">
                 <div class="container-fluid">
                     <div class="card mb-3 bg-dark border-success jumbo-container">
-                                       <!-- <form  action="../../php/setUpProfile.php" method="post"> -->
-                                        <!-- <input type="text" name="username"> -->
-                                        <!-- <input type="submit"> -->
-
-                                       <!-- </form> -->
+                                       
 
 
                                          <form   action="../../php/setUpProfile.php" method="post" enctype="multipart/form-data"  >
@@ -99,9 +129,9 @@
                                             </div>
                                             
                                             <div class="row justify-content-start sameStyle">
-                                                <div class="col-md-3"><input type="text" id="username" class="inputSame" name="username" ></div>
+                                                <div class="col-md-3"><input type="text" id="username" class="inputSame" name="username" required></div>
                                                 
-                                                <div class="col-md-3"><input id="inputFile" accept="image/png, image/jpeg" name="inputfile" class="inputSame2" type="file" title=""></div>
+                                                <div class="col-md-3"><input id="inputFile" accept="image/png, image/jpeg" name="inputfile" class="inputSame2" type="file" title="" required></div>
                                                 <label for="inputFile" class="labelBtn">Choose a file</label>
 
                                             </div>
@@ -116,7 +146,7 @@
                                          
                                             <div class="row justify-content-start sameStyle" style="margin-top: 10px;">
 
-                                                <div class="col-md-3"><input class="inputSame" id="faculty" name="faculty" type="text"></div>
+                                                <div class="col-md-3"><input class="inputSame" id="faculty" name="faculty" type="text" required></div>
                                                 <button type="button" class="col-md-3 btn btn-primary selectHobbies inputSame" name="hobbies" data-toggle="modal" data-target="#exampleModal">Select</button>
                                             </div>
                                             <hr class="lineWidth"><hr class="lineWidth2">
@@ -209,17 +239,6 @@
             }
         });
     });
-
-
-  //   const username = document.getElementById("username");
-  // const changeName = document.getElementById("name");
-
-  // const inputHandler =function(e){
-  //     changeName.innerText =e.target.value;
-  // }
-
-  //   username.addEventListener("input",inputHandler);
-  //   username.addEventListener("propertychange",inputHandler);
 
 </script>
 

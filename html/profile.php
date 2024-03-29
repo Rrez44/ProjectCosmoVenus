@@ -71,8 +71,9 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
                     <?php
                             $registered = $_SESSION["user_id"];
+                            // echo "$registered";
                             $db = new mysqli("localhost","root","1234","cosmo");
-                            $sql = "select * from usersDisplayInfo where username ='$registered' ";
+                            $sql = "select * from usersDisplayInfo where username ='$registered'";
                             $result = $db->query($sql);
                             if($result ->num_rows >0){
                               while($row =$result->fetch_assoc()){
@@ -203,6 +204,9 @@ $registered ='@'. $_SESSION["user_id"];
         </div>
         <div class="p-2">
           <button class="btn btn-success">Share <i class="fa-solid fa-share"></i></button>
+        </div>
+        <div class="p-2">
+         <a  href="SetUpProfile/setupprofile.php"> <button class="btn btn-success">Set Up Profile</button></a>
         </div>
       </div>
     </div>
