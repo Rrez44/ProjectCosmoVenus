@@ -18,7 +18,6 @@ else {
 
         if ($rUser->save()) {
             echo "Successful registration.";
-            // header("Location: setUpProfile.php");
             session_start();
             $_SESSION['user_id'] = $rUser->getUserName();
             $_SESSION['logged_in'] = true;
