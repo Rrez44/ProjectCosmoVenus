@@ -19,89 +19,84 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">    
     <link rel="stylesheet" href="../css/profilePictureComponent.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <style>
+      .comment-list .round {
+          border: 1px solid #1DB954;
+          border-radius: 50%;
+          padding: 2px;
+          max-width: 50px;
+          max-height: 50px;
+          min-width: 50px;
+          min-height: 50px;
+          object-fit: cover;
+          object-position: center;
+      }
+    </style>
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row g-0"> <!--  NAVBAR START  -->
-            <div class="container-fluid">
-            <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-                <a class="navbar-brand" style="margin-left: 15px;" href="#">CosmoVenus</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" style="margin-right: 15px;">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarText">
-                  <ul class="navbar-nav mr-auto ">
-                    <li class="nav-item active">
-                      <a class="nav-link mx-2" href="/message.html">Message <i class="fa-regular fa-message"></i><span class="sr-only">(current)</span></a>
-                    </li>
-                  <li class="nav-item dropdown" >
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Profile
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="profile.php">Visit Profile</a>
-                    <a class="dropdown-item" href="Login_Register/loginForm.html" id="logOut">Log Out</a>
-                  </li>
-                    <li class="nav-item mx-2">
-                      <a class="nav-link" href="#">Wink Back <i class="fa-regular fa-face-smile-wink"></i></i></a>
-                    </li>
-                  </ul>
-                  <form class="form-inline ms-auto search-form" style="margin-right: 15px;">
-                    <div class="input-group">
-                    <div class="input-group-prepend" >
-                        <span class="input-group-text" id="basic-addon1" style="border-radius: 5px 0px 0px 5px;">@</span>
-                    </div>
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search Username" aria-label="Search">
-                    <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-                </div>
-                  </form>
-                </div>
-              </nav>
-            </div>
-        </div> 
+        <?php
+        require_once("../views/navbar.php")
+        ?>
         <!-- NAVEND -->
         <!-- PROFILE COMPONENT STARTS HERE -->
         <div class="row justify-content-center">
             <div class="col-lg-3 d-flex justify-content-center">
                 <div class="profile-component">
                     <div class="card-container border border-success">
-                        <img class="img-fluid round" src="https://pics.craiyon.com/2023-06-20/89f79a8dee744596981e7417b8a7ea1d.webp" alt="user" />
-                        <h3>Rrezon Beqiri</h3>
-                        <h6>FIEK</h6>
-                        <p>Left my inhibitions i guess where my supervision was</p>
+
+                        <?php
+                        //  session_start();
+                        $registered = $_SESSION["user_id"];
+
+                        $db = new mysqli("localhost", "root", "", "cosmo");
+
+                        $stmt = $db->prepare("SELECT profilePicture, profileName, faculty, aboutMe FROM usersDisplayInfo WHERE username = ?");
+
+                        $stmt->bind_param("s", $registered);
+
+                        $stmt->execute();
+
+                        $stmt->bind_result($profilePicture, $profileName, $faculty, $aboutMe);
+                        while ($stmt->fetch()) {
+                            echo "<img src='$profilePicture' class='img-fluid round' alt='Profile Picture'>";
+                            echo "<h3>$profileName</h3>";
+                            echo "<h6>$faculty</h6>";
+                            echo "<p>$aboutMe</p>";
+                        }
+
+
+                        ?>
                         <div class="buttons">
-                            <button class="primary" disabled>
+                            <button class="primary">
                                 Message
                             </button>
-                            <button class="primary ghost" disabled>
-                                Request Friend
+                            <button class="primary ghost">
+                                Friends
                             </button>
                         </div>
                         <div class="skills">
                             <h6>Hobbies</h6>
                             <ul>
-                                <li>UI / UX</li>
-                                <li>Front End Development</li>
-                                <li>HTML</li>
-                                <li>CSS</li>
-                                <li>JavaScript</li>
-                                <li>React</li>
-                                <li>Node</li>
-                                <li>UI / UX</li>
-                                <li>Front End Development</li>
-                                <li>HTML</li>
-                                <li>CSS</li>
-                                <li>JavaScript</li>
-                                <li>React</li>
-                                <li>Node</li>
+                                <?php
+                                $registered = $_SESSION["user_id"];
+                                $db = new mysqli("localhost","root","","cosmo");
+                                $sql = "select * from hobbies where username ='$registered' ";
+                                $result = $db->query($sql);
+                                if($result ->num_rows >0){
+                                    while($row =$result->fetch_assoc()){
+                                        echo "<li> {$row['hobbyName']} </li>";
+                                    }
+                                }
+                                ?>
                             </ul>
                         </div>
                     </div>
-                  </div>
-              </div>
+                </div>
+            </div>
         <div class="col-lg-8">
             <div class="jumbotron jumbotron-fluid d-flex justify-content-center align-items-center">
                 <div class="container-fluid">
@@ -180,8 +175,8 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         
     </div>
   </div>
-
-  <div class="modal fade bg-dark" id="addPost" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <!-- ADD POST -->
+  <div class="modal fade bg-dark" id="addPost" tabindex="-1" role="dialog" aria-labelledby="addPostModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -213,9 +208,47 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     </div>
   </div>
 </div>
+<!-- VIEW POST  -->
 
-
-
+<div class="modal fade bg-success bg-gradient" id="viewPost" tabindex="-1" role="dialog" aria-labelledby="viewPostModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content bg-dark" style="color: #afb4c9;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="singlePostTitle">You shouldnt be here</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col d-flex justify-content-center">
+            <img class="img-fluid" id="singlePostImage" src="" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      <div class="row" style="width:100%">
+          <form class="form-inline d-flex my-2 justify-content-center" autocomplete="off" action="../php/saveComment.php" method="post">
+              <input type="text" class="form-control mr-sm-2" style="height:40px;  border-radius: 10px 0 0 10px;" id="commentPostText" placeholder="Comment" name="commentText" required>
+              <input type="hidden" id="sendCommentFormPostId" value='' name="postId" />
+              <button type="submit" class="btn btn-success" id="saveCommentButton" style="height:40px; width:25%; border-radius: 0 10px 10px 0;"><i class="fa-regular fa-paper-plane"></i></button>
+          </form>
+        </div>
+        <div class="row" style="width:100%;">
+          <div class="col d-flex justify-content-start" style="width:100%;">
+            <ul class="list-group list-group-flush comment-list" id="commentsContainer" style="width: 100%">
+              <!-- <li class="list-group-item bg-dark" style="color: #afb4c9; width:100%;">
+                <div class="row d-flex flex-row">
+                  <p style="color: #afb4c9;">rrezon44: Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem recusandae fuga assumenda aliquid a deleniti nobis deserunt enim rerum maiores! Perferendis est iste aut dolorem quia maxime enim deleniti quam.</p>
+                </div>
+              </li> -->
+          </ul>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
     <!-- LOG OUT -->
@@ -227,7 +260,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                     type: "POST",
                     url: "../php/logout.php",
                     success: function(response) {
-                      window.location.href = '/cosmovenus/views/Login_Register/loginForm.html';
+                      window.location.href = '../views/Login_Register/loginForm.html';
                     }
 
                 });
@@ -235,7 +268,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         });
     </script>
 
-    <!--    load posts-->
+<!--    load posts-->
     <script>
         $(document).ready(function() {
             // Function to load posts
@@ -258,48 +291,45 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 <!--    ADD LIKE AND REMOVE LIKE-->
     <script>
-      $(document).ready(function() {
-    $(document).on('click', '.fa-regular.fa-heart', function() {
-        var postId = $(this).closest('.col-lg-3').attr('id');
-        var likesCountElement = $(this).siblings('.likes-count');
-        
-        var currentLikes = parseInt(likesCountElement.text());
-        likesCountElement.text(currentLikes + 1);
+        $(document).ready(function() {
+            $(document).on('click', '.fa-regular.fa-heart', function() {
+                var postId = $(this).closest('.col-lg-3').attr('id');
+                var likesCountElement = $(this).siblings('.likes-count');
 
-        $(this).removeClass('fa-regular').addClass('fa-solid');
+                var currentLikes = parseInt(likesCountElement.text());
+                likesCountElement.text(currentLikes + 1);
 
-        $.ajax({
-            type: "POST",
-            url: "../php/likePost.php",
-            data: { postId: postId },
-            success: function(response) {
-            },
-            error: function(xhr, status, error) {
-                likesCountElement.text(currentLikes);
-                $(this).removeClass('fa-solid').addClass('fa-regular');
-                console.error(xhr.responseText);
-            }
+                $(this).removeClass('fa-regular').addClass('fa-solid');
+
+                $.ajax({
+                    type: "POST",
+                    url: "../php/likePost.php",
+                    data: { postId: postId },
+                    success: function(response) {
+                    },
+                    error: function(xhr, status, error) {
+                        likesCountElement.text(currentLikes);
+                        $(this).removeClass('fa-solid').addClass('fa-regular');
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
         });
-    });
-});
     </script>
     <script>
         $(document).ready(function() {
             $(document).on('click', '.fa-solid.fa-heart', function() {
-                // Store the reference to the clicked element for use in callbacks
                 var clickedElement = $(this);
                 var postId = clickedElement.closest('.col-lg-3').attr('id');
                 var likesCountElement = clickedElement.siblings('.likes-count');
                 var currentLikes = parseInt(likesCountElement.text());
 
-                // Make the AJAX call to attempt to unlike the post
                 $.ajax({
                     type: "POST",
                     url: "../php/unlikePost.php",
                     data: { postId: postId },
                     success: function(response) {
-                        // On success, update the UI to reflect the unlike action
-                        likesCountElement.text(currentLikes - 1); // Update likes count
+                        likesCountElement.text(currentLikes - 1);
                         clickedElement.removeClass('fa-solid').addClass('fa-regular'); // Change the icon
                     },
                     error: function(xhr, status, error) {
@@ -312,6 +342,94 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         });
 
     </script>
+
+
+<!--    load single post-->
+
+        <script>
+            $(document).ready(function() {
+            $('body').on('click', '.card-img-top, .card-body, .postSelector', function() {
+                var postId = $(this).closest('.col-lg-3, .col-sm-12').attr('id');
+
+                // AJAX call to load single post
+                $.ajax({
+                    url: '/CosmoVenus/php/loadSinglePost.php',
+                    type: 'POST',
+                    data: { postId: postId },
+                    dataType: 'json',
+                    success: function(data) {
+                        if (!data.error) {
+                            $('#singlePostTitle').text(data.description);
+                            $('#singlePostImage').attr('src', data.imagePath);
+                            $('#sendCommentFormPostId').val(postId);
+                            $('#viewPost').modal('show');
+                        } else {
+                            console.log(data.error);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX error: " + status + ", " + error);
+                    }
+                });
+
+                $.ajax({
+                    url: '../php/loadComments.php',
+                    type: 'POST',
+                    data: { postId: postId },
+                    dataType: 'json',
+                    success: function(data) {
+                        if (!data.error && data.comments && data.comments.length > 0) {
+                            $('#commentsContainer').empty();
+                            data.comments.forEach(function(comment) {
+                                var commentHtml = '<li class="list-group-item bg-dark" style="color: #afb4c9; width:100%;">' +
+                                    '<div class="row d-flex flex-row justify-content-between">' +
+                                    '<p style="color: #afb4c9;">' + comment.userName + ': ' + comment.text + '</p>' +
+                                    '<span style="font-size: 0.8em; color: #afb4c9;">' + comment.postTime +'</span>' +
+                                    '</div>' +
+                                    '</li>';
+                                $('#commentsContainer').append(commentHtml);
+                            });
+                        } else if (data.error) {
+                            console.log(data.error);
+                            $('#commentsContainer').empty();
+                            $('#commentsContainer').append('<li class="list-group-item bg-dark" style="color: #afb4c9;">No comments found.</li>');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX error: " + status + ", " + error);
+                        $('#commentsContainer').html('<li >Error loading comments.</li>');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- save comment to server -->
+    <script>
+      $(document).ready(() => {
+        $('#saveCommentButton').on('click', (e) => {
+          e.preventDefault();
+          const form = $(e.target).closest('form');
+          const postId = form.find('#sendCommentFormPostId').val();
+          const commentText = form.find('#commentPostText').val();
+          $.ajax({
+            type: 'POST',
+            url: '/CosmoVenus/php/saveComment.php',
+            data: { postId, commentText },
+            success: (response) => {
+              console.log(response);
+              $('#commentPostText').val('');
+              alert("Comment Added successfully")
+            },
+            error: (xhr, status, error) => {
+              console.error('AJAX error: ' + status + ', ' + error);
+            }
+          });
+        });
+        }
+      )
+    </script>
+
 
 </body>
 </html>

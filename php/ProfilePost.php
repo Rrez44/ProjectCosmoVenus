@@ -3,7 +3,7 @@
 require_once 'dbconfig.php';
 require_once '../php/User.php';
 
-class ProfilePost
+class ProfilePost implements JsonSerializable
 {
     private $postId;
     private User $poster;
@@ -92,7 +92,7 @@ class ProfilePost
 
     private function generatePostId(): string
     {
-        $id = $this->poster->getUserName() . $this->timeOfPost->format('Y-m-d H:i:s') . random_int(1, 69);
+        $id = $this->poster->getUserName() . $this->timeOfPost->format('YmdHisu') . random_int(1, 69);
         return trim($id);
     }
 
@@ -133,7 +133,7 @@ class ProfilePost
             $post->execute();
             $profileData = $post->fetch(PDO::FETCH_ASSOC);
             if ($profileData) {
-                return new ProfilePost($profileData['poster'], $profileData['description'], $profileData['imagePath'],$profileData['postId'], $profileData['timeOfPost'], $profileData['likes']);
+                return new ProfilePost(User::getUser($profileData['poster']), $profileData['description'], $profileData['imagePath'],$profileData['postId'], $profileData['timeOfPost'], $profileData['likes']);
             } else {
 
                 return null;
@@ -160,6 +160,16 @@ class ProfilePost
         }
         return false;
 
+    }
+    public function jsonSerialize() {
+        return [
+            'postId' => $this->postId,
+            'poster' => $this->poster->getUserName(),
+            'imagePath' => $this->imagePath,
+            'description' => $this->description,
+            'likes' => $this->likes,
+            'timeOfPost' => $this->getTimeOfPost(),
+        ];
     }
 }
 ?>
