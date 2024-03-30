@@ -48,7 +48,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                         $port = 3306;
                         $dbname = 'cosmo';
                         $username = 'root';
-                        $password = '';
+                        $password = '1234';
 
                         try {
                             $conn = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4", $username, $password);
@@ -67,7 +67,8 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 
                         $posts = $stmt->fetch(PDO::FETCH_ASSOC);
-                            echo "<img src='../ " . $posts['profilePicture']  . "' class='img-fluid round' id='profilePicture' alt='Profile Picture'>";
+                           
+                            echo "<img src=" . $posts['profilePicture']  . " class='img-fluid round' id='profilePicture' alt='Profile Picture'>";
                             echo "<h3 id='name'> " .  $posts['profileName'] . "</h3>";
                             echo "<h6 id='facultyy'>" .  $posts['faculty'] . "</h6>";
                             echo "<p id='aboutmee'>" .  $posts['aboutMe'] . "</p>";

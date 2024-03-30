@@ -41,8 +41,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         <?php
         require_once("../views/navbar.php")
         ?>
-        <!-- NAVEND -->
-        <!-- PROFILE COMPONENT STARTS HERE -->
+       
         <div class="row justify-content-center">
             <div class="col-lg-3 d-flex justify-content-center">
                 <div class="profile-component">
@@ -52,7 +51,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                         //  session_start();
                         $registered = $_SESSION["user_id"];
 
-                        $db = new mysqli("localhost", "root", "", "cosmo");
+                        $db = new mysqli("localhost", "root", "1234", "cosmo");
 
                         $stmt = $db->prepare("SELECT profilePicture, profileName, faculty, aboutMe FROM usersDisplayInfo WHERE username = ?");
 
@@ -83,7 +82,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                             <ul>
                                 <?php
                                 $registered = $_SESSION["user_id"];
-                                $db = new mysqli("localhost","root","","cosmo");
+                                $db = new mysqli("localhost","root","1234","cosmo");
                                 $sql = "select * from hobbies where username ='$registered' ";
                                 $result = $db->query($sql);
                                 if($result ->num_rows >0){
@@ -103,7 +102,11 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                     <div class="card mb-3 bg-dark border-success jumbo-container">
                         <img class="card-img-top" style="border-radius: 5% 5% 0px 0px; max-height: 200px; object-fit: cover;" src="https://wallpapers.com/images/hd/ultrawide-4k-u69bk8p5x2no56dj.jpg" alt="Card image cap">
                         <div class="card-body">
-                          <h5 class="card-title">@rrez44</h5>
+                        <?php
+
+                            $registered ='@'. $_SESSION["user_id"];
+                              echo "<h5 class='card-title'>$registered </h5>";
+                        ?>
                             <hr>
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-3 col-md-3 col-sm-6 small-screen-query d-flex justify-content-center">
@@ -163,6 +166,9 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         </div>
         <div class="p-2">
           <button class="btn btn-success">Share <i class="fa-solid fa-share"></i></button>
+        </div>
+        <div class="p-2">
+         <button id="setupProfileBtn" class="btn btn-success">Set Up Profile</button>
         </div>
       </div>
     </div>
@@ -404,7 +410,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         });
     </script>
 
-    <!-- save comment to server -->
+    
     <script>
       $(document).ready(() => {
         $('#saveCommentButton').on('click', (e) => {
@@ -428,8 +434,13 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         });
         }
       )
-    </script>
 
+      $("#setupProfileBtn").click(function(e) {
+            e.preventDefault(); 
+      window.location.href = '../views/setUpProfile.php'; 
+            });
+
+    </script>
 
 </body>
 </html>

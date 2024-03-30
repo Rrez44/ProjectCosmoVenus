@@ -16,14 +16,14 @@
                                 Profile
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/ProjectCosmoVenus/html/profile.php">Visit Profile</a>
+                                <a class="dropdown-item" href="../views/profile.php">Visit Profile</a>
                                 <a class="dropdown-item" href="Login_Register/loginForm.html" id="logOut">Log Out</a>
                         </li>
                         <li class="nav-item mx-2">
                             <a class="nav-link" href="#">Wink Back <i class="fa-regular fa-face-smile-wink"></i></i></a>
                         </li>
                     </ul>
-                    <form action="../html/searchPeople.php" method="post" class="form-inline ms-auto search-form" style="margin-right: 15px;">
+                    <form action="../views/searchPeople.php" method="post" class="form-inline ms-auto search-form" style="margin-right: 15px;">
                         <div class="input-group">
                             <div class="input-group-prepend" >
                                 <span class="input-group-text" id="basic-addon1" style="border-radius: 5px 0px 0px 5px;">@</span>

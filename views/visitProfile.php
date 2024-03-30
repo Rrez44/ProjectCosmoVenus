@@ -1,9 +1,9 @@
 <?php
 session_start();
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: /cosmovenus/views/Login_Register/loginForm.html');
-    exit;
-}
+// if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+//     header('Location: /cosmovenus/views/Login_Register/loginForm.html');
+//     exit;
+// }
 ?>
 
 <!DOCTYPE html>
@@ -25,68 +25,28 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 <body>
     <div class="container-fluid">
       <?php
-        require_once("../../ProjectCosmoVenus/html/navbar.php")
+        require_once("../views/navbar.php")
       ?>
-        <!-- <div class="row g-0"> 
-            <div class="container-fluid">
-            <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-                <a class="navbar-brand" style="margin-left: 15px;" href="#">CosmoVenus</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" style="margin-right: 15px;">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarText">
-                  <ul class="navbar-nav mr-auto ">
-                    <li class="nav-item active">
-                      <a class="nav-link mx-2" href="/message.html">Message <i class="fa-regular fa-message"></i><span class="sr-only">(current)</span></a>
-                    </li>
-                  <li class="nav-item dropdown" >
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Profile
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="profile.php">Visit Profile</a>
-                    <a class="dropdown-item" href="Login_Register/loginForm.html" id="logOut">Log Out</a>
-                  </li>
-                    <li class="nav-item mx-2">
-                      <a class="nav-link" href="#">Wink Back <i class="fa-regular fa-face-smile-wink"></i></i></a>
-                    </li>
-                  </ul>
-                  <form class="form-inline ms-auto search-form" style="margin-right: 15px;">
-                    <div class="input-group">
-                    <div class="input-group-prepend" >
-                        <span class="input-group-text" id="basic-addon1" style="border-radius: 5px 0px 0px 5px;">@</span>
-                    </div>
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search Username" aria-label="Search">
-                    <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-                </div>
-                  </form>
-                </div>
-              </nav>
-            </div>
-        </div>  -->
-        <!-- NAVEND -->
-        <!-- PROFILE COMPONENT STARTS HERE -->
+        
         <div class="row justify-content-center">
             <div class="col-lg-3 d-flex justify-content-center">
                 <div class="profile-component">
                     <div class="card-container border border-success">
 
                     <?php
-                        //  session_start();
                          $visitedUsername = $_GET['username'];
-                        //  echo "$profileName";
-                         
+                        
                          $db = new mysqli("localhost", "root", "1234", "cosmo");
                          
-                         $stmt = $db->prepare("SELECT profpicture, profileName, faculty, aboutMe FROM usersDisplayInfo WHERE username = ?");
+                         $stmt = $db->prepare("SELECT profilePicture, profileName, faculty, aboutMe FROM usersDisplayInfo WHERE username = ?");
                          
                          $stmt->bind_param("s", $visitedUsername);
                          
                          $stmt->execute();
                          
-                        $stmt->bind_result($profpicture, $profileName, $faculty, $aboutMe);
+                        $stmt->bind_result($profilePicture, $profileName, $faculty, $aboutMe);
                          while ($stmt->fetch()) {
-                             echo "<img src='$profpicture' class='img-fluid round' alt='Profile Picture'>";
+                             echo "<img src='$profilePicture' class='img-fluid round' alt='Profile Picture'>";
                              echo "<h3>$profileName</h3>";
                              echo "<h6>$faculty</h6>";
                              echo "<p>$aboutMe</p>";
@@ -113,7 +73,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                                 $result = $db->query($sql);
                                 if($result ->num_rows >0){
                                   while($row =$result->fetch_assoc()){
-                                    echo "<li> {$row['hoby_name']} </li>";
+                                    echo "<li> {$row['hobbyName']} </li>";
                                   }
                                 }    
                               ?>
@@ -270,7 +230,6 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
       </div>
     </div>
   </div>
-
     <!-- LOG OUT -->
     <script>
         $(document).ready(function() {
@@ -280,8 +239,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                     type: "POST",
                     url: "../php/logout.php",
                     success: function(response) {
-                        //Rrezon nese nuk t bon logout e kom ndrru path um vyjke
-                      window.location.href = '/ProjectCosmoVenus/html/Login_Register/loginForm.html';
+                      window.location.href = '"../views/Login_Register/loginForm.html"';
                     }
 
                 });

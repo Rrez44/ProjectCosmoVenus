@@ -23,21 +23,21 @@
 </head>
 <body>
         <?php 
-            require_once("../html/navbar.php");
+            require_once("../views/navbar.php");
 
 
                          
                     
         ?>
          <div class="row justify-content-left">
-
+            <!-- <a href="/views/visitProfile.php" -->
                          <?php
 
                             $registered = $_POST["searchUser"];
                             // echo "$registered";
                             $db = new mysqli("localhost", "root", "1234", "cosmo");
                                                     
-                            $stmt = $db->prepare("SELECT  username,profileName,profpicture    FROM usersDisplayInfo WHERE profileName = ?");
+                            $stmt = $db->prepare("SELECT  username,profileName,profilePicture    FROM usersDisplayInfo WHERE profileName = ?");
 
                             $stmt->bind_param("s", $registered);
 
@@ -47,19 +47,19 @@
                             if($stmt->num_rows()>0){
                                                             
 
-                            $stmt->bind_result( $username,$profileName,$profpicture);
+                            $stmt->bind_result( $username,$profileName,$profilePicture);
                             while ($stmt->fetch()) {
                                 
                                 echo '<div class="col-lg-3 d-flex justify-content-center">';
                                 echo '<div class="profile-component">';
                                 echo '<div style="height: 400px;" class="card-container border border-success">';
-                                echo '<img src="' . $profpicture . '" class="img-fluid round" alt="Profile Picture">';
+                                echo '<img src="' . $profilePicture . '" class="img-fluid round" alt="Profile Picture">';
                                 echo '<h3 style="margin-top: 25px;">' . $profileName . '</h3>';
                                 echo '<div class="buttons" style="margin-top: 50px;">';
                                 echo '<button class="primary equalWidth">Add Friend</button>';
                                 echo '</div>';
                                 echo '<div class="buttons" style="margin-top: 10px;">';
-                                echo '<a href="../html/visitProfile.php?username=' . urlencode($username) . '"><button class="primary ghost equalWidth">Visit Profile</button></a>';
+                                echo '<a href="../views/visitProfile.php?username=' . urlencode($username) . '"><button class="primary ghost equalWidth">Visit Profile</button></a>';
                                 echo '</div>';
                                 echo '</div>';
                                 echo '</div>';
