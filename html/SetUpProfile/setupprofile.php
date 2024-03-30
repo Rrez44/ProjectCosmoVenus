@@ -1,3 +1,13 @@
+
+<?php
+session_start();
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true ) {
+  header('Location: ../Login_Register/loginForm.html');
+   exit;
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,12 +25,16 @@
     <link rel="stylesheet" href="../../css/profilePictureComponent.css">
     <link rel="stylesheet" href="../../css/SetUpProfile/setupprofile.css">
 
-    <!-- <script type="script" src="../../JS/setUpprofile.js" defer></script> -->
-
   </head>
 <body>
     <div class="container-fluid">
-        <div class="row g-0"> <!--  NAVBAR START  -->
+
+    <?php
+        require_once("../navbar.php")
+      ?>
+
+        <!-- <div class="row g-0"> -->
+           <!--  NAVBAR START 
             <div class="container-fluid">
             <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
                 <a class="navbar-brand" style="margin-left: 15px;" href="#">CosmoVenus</a>
@@ -52,15 +66,13 @@
               </nav>
             </div>
         </div> 
-        <!-- NAVEND -->
+        NAVEND -->
         <!-- PROFILE COMPONENT STARTS HERE -->
         <div class="row justify-content-center">
             <div class="col-lg-3 d-flex justify-content-center">
                 <div class="profile-component">
                     <div class="card-container border border-success">
                         <?php
-                          session_start();
-                            $_SESSION['first_register'];
                             if( $_SESSION['first_register']){
                               echo "<img src='../../images/profileIcons/anonymous.png' id='profilePicture' class='img-fluid round' alt='Profile Picture'>";
                               echo "<h3  id='name'>  </h3> ";
@@ -70,21 +82,23 @@
                                 }
                           if( $_SESSION['logged_in']){
                             $registered = $_SESSION["user_id"];
-                            $db = new mysqli("localhost","root","1234","cosmo");
-                            $sql = "select * from usersDisplayInfo where username ='$registered' ";
-                            $result = $db->query($sql);
-                            if($result ->num_rows >0){
-                              while($row =$result->fetch_assoc()){
-                                echo "<img src='../{$row['profpicture']}' id='profilePicture' class='img-fluid round' alt='Profile Picture'>";
-                                echo "<h3  id='name'> {$row['profileName']} </h3> ";
-                                echo "<h6 id='facultyy'> {$row['faculty']} </h6>";
-                                echo "<p id='aboutmee'> {$row['aboutMe']} </p>";
-                              }
+                         
+                            $db = new mysqli("localhost", "root", "1234", "cosmo");
                             
-
-                              }
-                      }
-                        
+                            $stmt = $db->prepare("SELECT profpicture, profileName, faculty, aboutMe FROM usersDisplayInfo WHERE username = ?");
+                            
+                            $stmt->bind_param("s", $registered);
+                            
+                            $stmt->execute();
+                            
+                           $stmt->bind_result($profpicture, $profileName, $faculty, $aboutMe);
+                            while ($stmt->fetch()) {
+                                echo "<img src='../$profpicture' class='img-fluid round' id='profilePicture' alt='Profile Picture'>";
+                                echo "<h3 id='name'>$profileName</h3>";
+                                echo "<h6 id='facultyy'>$faculty</h6>";
+                                echo "<p id='aboutmee'>$aboutMe</p>";
+                            }
+                          }
                          ?>
                         
                         
@@ -194,21 +208,13 @@
                                             </div>
     
                                         </form>
-                                         
-
-
-
-                                        <!-- Modal -->
-                                        
-
-                            
                                       </div>
                                 </div>
                             </div>
                         </div>
-                      </div>
+                    </div>
                 </div>
-              </div>
+            </div>
         </div>
     </div>
 
@@ -226,15 +232,12 @@
 <script>
     const radioButtons = document.querySelectorAll('input[type="radio"]');
     
-    // Add event listener to each radio button
     radioButtons.forEach(function(button) {
         button.addEventListener('click', function() {
-            // If the radio button is already checked, uncheck it
             if (this.getAttribute('data-checked') === 'true') {
                 this.checked = false;
                 this.setAttribute('data-checked', 'false');
             } else {
-                // Otherwise, mark it as checked
                 this.setAttribute('data-checked', 'true');
             }
         });

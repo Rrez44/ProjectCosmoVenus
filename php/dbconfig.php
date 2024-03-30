@@ -4,7 +4,9 @@ $host = 'localhost';
 $port = 3306;
 $dbname = 'cosmo';
 $username = 'root';
-$password = '';
+$password = '1234';
+
+
 
 try {
     $conn = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4", $username, $password);

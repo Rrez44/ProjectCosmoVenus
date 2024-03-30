@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
@@ -25,7 +24,10 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row g-0"> <!--  NAVBAR START  -->
+      <?php
+        require_once("../html/navbar.php")
+      ?>
+        <!-- <div class="row g-0"> 
             <div class="container-fluid">
             <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
                 <a class="navbar-brand" style="margin-left: 15px;" href="#">CosmoVenus</a>
@@ -61,7 +63,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                 </div>
               </nav>
             </div>
-        </div> 
+        </div>  -->
         <!-- NAVEND -->
         <!-- PROFILE COMPONENT STARTS HERE -->
         <div class="row justify-content-center">
@@ -70,27 +72,28 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                     <div class="card-container border border-success">
 
                     <?php
-                            $registered = $_SESSION["user_id"];
-                            // echo "$registered";
-                            $db = new mysqli("localhost","root","1234","cosmo");
-                            $sql = "select * from usersDisplayInfo where username ='$registered'";
-                            $result = $db->query($sql);
-                            if($result ->num_rows >0){
-                              while($row =$result->fetch_assoc()){
-                                echo "<img src='{$row['profpicture']}' class='img-fluid round' alt='Profile Picture'>";
-                                echo "<h3> {$row['profileName']} </h3> ";
-                                echo "<h6> {$row['faculty']} </h6>";
-                                echo "<p> {$row['aboutMe']} </p>";
-                              }
-                            }
+                        //  session_start();
+                         $registered = $_SESSION["user_id"];
+                         
+                         $db = new mysqli("localhost", "root", "1234", "cosmo");
+                         
+                         $stmt = $db->prepare("SELECT profpicture, profileName, faculty, aboutMe FROM usersDisplayInfo WHERE username = ?");
+                         
+                         $stmt->bind_param("s", $registered);
+                         
+                         $stmt->execute();
+                         
+                        $stmt->bind_result($profpicture, $profileName, $faculty, $aboutMe);
+                         while ($stmt->fetch()) {
+                             echo "<img src='$profpicture' class='img-fluid round' alt='Profile Picture'>";
+                             echo "<h3>$profileName</h3>";
+                             echo "<h6>$faculty</h6>";
+                             echo "<p>$aboutMe</p>";
+                         }
 
 
                         ?>
-                        <!-- <img class="img-fluid round" src="https://pics.craiyon.com/2023-06-20/89f79a8dee744596981e7417b8a7ea1d.webp" alt="user" /> -->
-                        <!-- <h3>Rrezon Beqiri</h3> -->
-                        <!-- <h6>FIEK</h6> -->
-                        <!-- <p>Left my inhibitions i guess where my supervision was</p> -->
-                        <div class="buttons">
+                       <div class="buttons">
                             <button class="primary">
                                 Message
                             </button>
@@ -101,22 +104,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                         <div class="skills">
                             <h6>Hobbies</h6>
                              <ul>
-                                <!-- <li>UI / UX</li>
-                                <li>Front End Development</li>
-                                <li>HTML</li>
-                                <li>CSS</li>
-                                <li>JavaScript</li>
-                                <li>React</li>
-                                <li>Node</li>
-                                <li>UI / UX</li>
-                                <li>Front End Development</li>
-                                <li>HTML</li>
-                                <li>CSS</li>
-                                <li>JavaScript</li>
-                                <li>React</li>
-                                <li>Node</li> -->
-                            
-                            <?php
+                              <?php
                                 $registered = $_SESSION["user_id"];
                                 $db = new mysqli("localhost","root","1234","cosmo");
                                 $sql = "select * from hobbies where username ='$registered' ";
@@ -140,12 +128,10 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                         <div class="card-body">
                         <?php
 
-$registered ='@'. $_SESSION["user_id"];
-  echo "<h5 class='card-title'>$registered </h5>";
-?>
-  <!-- <hr> -->
-                          <!-- <h5 class="card-title">@rrez44</h5> -->
-                            <hr>
+                              $registered ='@'. $_SESSION["user_id"];
+                                echo "<h5 class='card-title'>$registered </h5>";
+                              ?>
+                              <hr>
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-3 col-md-3 col-sm-6 small-screen-query d-flex justify-content-center">
                                     <div class="card bg-dark stat-card" >
@@ -206,7 +192,7 @@ $registered ='@'. $_SESSION["user_id"];
           <button class="btn btn-success">Share <i class="fa-solid fa-share"></i></button>
         </div>
         <div class="p-2">
-         <a  href="SetUpProfile/setupprofile.php"> <button class="btn btn-success">Set Up Profile</button></a>
+         <button id="setupProfileBtn" class="btn btn-success">Set Up Profile</button>
         </div>
       </div>
     </div>
@@ -285,6 +271,12 @@ $registered ='@'. $_SESSION["user_id"];
 
     <!-- LOG OUT -->
     <script>
+      
+      $("#setupProfileBtn").click(function(e) {
+            e.preventDefault(); 
+      window.location.href = '../html/SetUpProfile/setupprofile.php'; 
+            });
+
         $(document).ready(function() {
             $("#logOut").click(function(e) {
                 e.preventDefault()
@@ -292,12 +284,14 @@ $registered ='@'. $_SESSION["user_id"];
                     type: "POST",
                     url: "../php/logout.php",
                     success: function(response) {
-                      window.location.href = '/cosmovenus/views/Login_Register/loginForm.html';
+                      window.location.href = '/ProjectCosmoVenus/html/Login_Register/loginForm.html';
                     }
 
                 });
             });
         });
+
+
     </script>
 </body>
 </html>

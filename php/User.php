@@ -74,7 +74,8 @@ class User {
             if (password_verify($password, $logAttempt->getPassword())){
                 $_SESSION['user_id'] = $logAttempt->getUserName();
                 $_SESSION['logged_in'] = true;
-                header('Location: /cosmovenus/views/profile.php');
+                $_SESSION['first_register']=false;
+                header('Location: ../html/profile.php');
             }
             else{
                 echo "Failed to log in";
@@ -84,7 +85,6 @@ class User {
 
 
 
-    // Getters
     public function getFirstName() {
         return $this->firstName;
     }

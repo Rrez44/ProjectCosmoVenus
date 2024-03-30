@@ -23,6 +23,7 @@ else {
             $_SESSION['user_id'] = $rUser->getUserName();
             $_SESSION['logged_in'] = true;
             $_SESSION['first_register']=true;
+            $_SESSION['user_registered'] = true;
             header("Location: ../html/SetUpProfile/setupprofile.php");
             
         } else {
