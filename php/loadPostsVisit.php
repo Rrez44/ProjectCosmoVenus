@@ -5,8 +5,11 @@ include_once 'User.php';
 
 session_start();
 
-$userName = $_SESSION['user_id'];
+
 global $conn;
+if (isset($_GET['username'])) {
+    $userName = $_GET['username'];
+
 
 
 
@@ -40,4 +43,7 @@ foreach ($posts as $row) {
 }
 
 echo $finalString;
+}else{
+    echo "Username missing";
+}
 ?>

@@ -144,86 +144,56 @@ session_start();
     </div>
     <div class="container-fluid">
       <div class="d-flex flex-wrap justify-content-start mx-5 my-3 button-list">
-        <!-- <div class="p-2"> -->
-          <!-- <button class="btn btn-success">Add post <i class="fa-solid fa-plus"></i></button> -->
-        <!-- </div> -->
+     
         <div class="p-2">
           <button class="btn btn-success">Friend List <i class="fa-solid fa-user-group"></i></button>
         </div>
         <div class="p-2">
           <button class="btn btn-success">Share <i class="fa-solid fa-share"></i></button>
         </div>
-        <!-- <div class="p-2"> -->
-         <!-- <a  href="SetUpProfile/setupprofile.php"> <button class="btn btn-success">Set Up Profile</button></a> -->
-        <!-- </div> -->
+      
       </div>
     </div>
     
 
-    <div class="container-fluid" >
-      <div class="row d-flex justify-content-start mx-4">
-        <div class="col-lg-3 col-sm-12">
-        <div class="card bg-dark border border-success mx-2 my-2 post-card">
-          <img class="card-img-top" src="https://getwallpapers.com/wallpaper/full/0/d/1/1476845-studio-ghibli-wallpaper-hd-2560x1440-windows-xp.jpg" alt="Card image cap">
-          <div class="card-body">
-            <p class="card-text">Howls moving castle</p>
-          </div>
-          <div class="like-comment-container">
-            <p class="like-comment">
-              <span><i class="fa-regular fa-heart"></i></span>
-              <span><i class="fa-regular fa-comment"></i></span>
-            </p>
-            <i class="post-card-date">2024-18-3</i>
-          </div>
-        </div>
-        </div>
-        <div class="col-lg-3 col-sm-12">
-        <div class="card bg-dark border border-success mx-2 my-2 post-card">
-          <img class="card-img-top " src="https://cdn.vox-cdn.com/thumbor/U6grOQo6DmyIi3pm-VqyR1aU-JE=/0x0:510x351/2000x1333/filters:focal(231x153:232x154)/cdn.vox-cdn.com/uploads/chorus_asset/file/4029766/yoda.0.jpg" alt="Card image cap">
-          <div class="card-body">
-            <p class="card-text">One with the force you must be</p>
-          </div>
-          <div class="like-comment-container">
-            <p class="like-comment">
-              <span><i class="fa-regular fa-heart"></i></span>
-              <span><i class="fa-regular fa-comment"></i></span>
-            </p>
-            <i class="post-card-date">2024-18-3</i>
+    <div class="container-fluid">
+    <div class="row d-flex justify-content-start mx-4 post-container" id="postContainer">
+    <div class="modal fade bg-success bg-gradient" id="viewPost" tabindex="-1" role="dialog" aria-labelledby="viewPostModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content bg-dark" style="color: #afb4c9;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="singlePostTitle">You shouldn't be here</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col d-flex justify-content-center">
+            <img class="img-fluid" id="singlePostImage" src="" alt="">
           </div>
         </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row" style="width:100%">
+          <form class="form-inline d-flex my-2 justify-content-center" autocomplete="off" action="../php/saveComment.php" method="post">
+            <input type="text" class="form-control mr-sm-2" style="height:40px;  border-radius: 10px 0 0 10px;" id="commentPostText" placeholder="Comment" name="commentText" required>
+            <input type="hidden" id="sendCommentFormPostId" value='' name="postId" />
+            <button type="submit" class="btn btn-success" id="saveCommentButton" style="height:40px; width:25%; border-radius: 0 10px 10px 0;"><i class="fa-regular fa-paper-plane"></i></button>
+          </form>
         </div>
-        <div class="col-lg-3 col-sm-12">
-        <div class="card bg-dark border border-success mx-2 my-2 post-card">
-          <img class="card-img-top " src="https://images8.alphacoders.com/131/1314205.jpeg">
-          <div class="card-body">
-            <p class="card-text">Zendaya is hot</p>
+        <div class="row" style="width:100%;">
+          <div class="col d-flex justify-content-start" style="width:100%;">
+            <ul class="list-group list-group-flush comment-list" id="commentsContainer" style="width: 100%">
+            </ul>
           </div>
-          <div class="like-comment-container">
-            <p class="like-comment">
-              <span><i class="fa-regular fa-heart"></i></span>
-              <span><i class="fa-regular fa-comment"></i></span>
-            </p>
-            <i class="post-card-date">2024-18-3</i>
-          </div>
-        </div>
-        </div>
-        <div class="col-lg-3 col-sm-12">
-        <div class="card bg-dark border border-success mx-2 my-2 post-card">
-          <img class="card-img-top" src="https://hips.hearstapps.com/hmg-prod/images/jean-luc-picard-63ffd4e72a432.jpg?crop=0.7509765625xw:1xh;center,top&resize=1200:*" alt="Card image cap">
-          <div class="card-body">
-            <p class="card-text">Captain Picard idolo</p>
-          </div>
-          <div class="like-comment-container">
-            <p class="like-comment">
-              <span><i class="fa-regular fa-heart"></i></span>
-              <span><i class="fa-regular fa-comment"></i></span>
-            </p>
-            <i class="post-card-date">2024-18-3</i>
-          </div>
-        </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
+    </div>
+</div>
 
        
         
@@ -233,11 +203,37 @@ session_start();
     <!-- LOG OUT -->
     <script>
         $(document).ready(function() {
+          var urlParams = new URLSearchParams(window.location.search);
+            var username = urlParams.get('username');
+            function loadPosts() {
+                $.ajax({
+                    type: "GET",
+                    url: "../php/loadPostsVisit.php",
+                                        data: { username: username }, // Pass the username as a parameter
+
+                    success: function(response) {
+                        $('#postContainer').append(response);
+                        
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+            loadPosts();
+        });
+    </script>
+</script>
+    <script>
+        $(document).ready(function() {
+       
+            
             $("#logOut").click(function(e) {
                 e.preventDefault()
                 $.ajax({
                     type: "POST",
                     url: "../php/logout.php",
+
                     success: function(response) {
                       window.location.href = '"../views/Login_Register/loginForm.html"';
                     }
@@ -246,5 +242,145 @@ session_start();
             });
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.fa-regular.fa-heart', function() {
+                var postId = $(this).closest('.col-lg-3').attr('id');
+                var likesCountElement = $(this).siblings('.likes-count');
+
+                var currentLikes = parseInt(likesCountElement.text());
+                likesCountElement.text(currentLikes + 1);
+
+                $(this).removeClass('fa-regular').addClass('fa-solid');
+
+                $.ajax({
+                    type: "POST",
+                    url: "../php/likePost.php",
+                    data: { postId: postId },
+                    success: function(response) {
+                    },
+                    error: function(xhr, status, error) {
+                        likesCountElement.text(currentLikes);
+                        $(this).removeClass('fa-solid').addClass('fa-regular');
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.fa-solid.fa-heart', function() {
+                var clickedElement = $(this);
+                var postId = clickedElement.closest('.col-lg-3').attr('id');
+                var likesCountElement = clickedElement.siblings('.likes-count');
+                var currentLikes = parseInt(likesCountElement.text());
+
+                $.ajax({
+                    type: "POST",
+                    url: "../php/unlikePost.php",
+                    data: { postId: postId },
+                    success: function(response) {
+                        likesCountElement.text(currentLikes - 1);
+                        clickedElement.removeClass('fa-solid').addClass('fa-regular'); // Change the icon
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Failed to unlike the post. Please try again.');
+                        console.error("Error responseText:", xhr.responseText);
+                    }
+                });
+            });
+        });
+
+    </script>
+
+
+<!--    load single post-->
+
+        <script>
+            $(document).ready(function() {
+            $('body').on('click', '.card-img-top, .card-body, .postSelector', function() {
+                var postId = $(this).closest('.col-lg-3, .col-sm-12').attr('id');
+
+  
+                $.ajax({
+                    url: '/cosmovenus/php/loadSinglePost.php',
+                    type: 'POST',
+                    data: { postId: postId },
+                    dataType: 'json',
+                    success: function(data) {
+                        if (!data.error) {
+                            $('#singlePostTitle').text(data.description);
+                            $('#singlePostImage').attr('src', data.imagePath);
+                            $('#sendCommentFormPostId').val(postId);
+                            $('#viewPost').modal('show');
+                        } else {
+                            console.log(data.error);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX error: " + status + ", " + error);
+                    }
+                });
+
+                $.ajax({
+                    url: '../php/loadComments.php',
+                    type: 'POST',
+                    data: { postId: postId },
+                    dataType: 'json',
+                    success: function(data) {
+                        if (!data.error && data.comments && data.comments.length > 0) {
+                            $('#commentsContainer').empty();
+                            data.comments.forEach(function(comment) {
+                                var commentHtml = '<li class="list-group-item bg-dark" style="color: #afb4c9; width:100%;">' +
+                                    '<div class="row d-flex flex-row justify-content-between">' +
+                                    '<p style="color: #afb4c9;">' + comment.userName + ': ' + comment.text + '</p>' +
+                                    '<span style="font-size: 0.8em; color: #afb4c9;">' + comment.postTime +'</span>' +
+                                    '</div>' +
+                                    '</li>';
+                                $('#commentsContainer').append(commentHtml);
+                            });
+                        } else if (data.error) {
+                            console.log(data.error);
+                            $('#commentsContainer').empty();
+                            $('#commentsContainer').append('<li class="list-group-item bg-dark" style="color: #afb4c9;">No comments found.</li>');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX error: " + status + ", " + error);
+                        $('#commentsContainer').html('<li >Error loading comments.</li>');
+                    }
+                });
+            });
+        });
+    </script>
+
+    
+    <script>
+      $(document).ready(() => {
+        $('#saveCommentButton').on('click', (e) => {
+          e.preventDefault();
+          const form = $(e.target).closest('form');
+          const postId = form.find('#sendCommentFormPostId').val();
+          const commentText = form.find('#commentPostText').val();
+          $.ajax({
+            type: 'POST',
+            url: '/cosmovenus/php/saveComment.php',
+            data: { postId, commentText },
+            success: (response) => {
+              console.log(response);
+              $('#commentPostText').val('');
+              alert("Comment Added successfully")
+            },
+            error: (xhr, status, error) => {
+              console.error('AJAX error: ' + status + ', ' + error);
+            }
+          });
+        });
+        }
+      )
+
+      
+      </script>
 </body>
 </html>
