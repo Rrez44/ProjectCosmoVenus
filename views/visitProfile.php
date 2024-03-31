@@ -37,9 +37,6 @@ require_once ("../php/dbconfig.php");
 
                     <?php
                          $visitedUsername = $_GET['username'];
-                        
-
-
                         try {
                           $stmt = $conn->prepare("SELECT profilePicture, profileName, faculty, aboutMe FROM usersDisplayInfo WHERE username = ?");
                           $stmt->execute([$visitedUsername]); 
