@@ -4,6 +4,8 @@ session_start();
 //     header('Location: /cosmovenus/views/Login_Register/loginForm.html');
 //     exit;
 // }
+
+require_once ("../php/dbconfig.php");
 ?>
 
 <!DOCTYPE html>
@@ -36,23 +38,26 @@ session_start();
                     <?php
                          $visitedUsername = $_GET['username'];
                         
-                         $db = new mysqli("localhost", "root", "1234", "cosmo");
-                         
-                         $stmt = $db->prepare("SELECT profilePicture, profileName, faculty, aboutMe FROM usersDisplayInfo WHERE username = ?");
-                         
-                         $stmt->bind_param("s", $visitedUsername);
-                         
-                         $stmt->execute();
-                         
-                        $stmt->bind_result($profilePicture, $profileName, $faculty, $aboutMe);
-                         while ($stmt->fetch()) {
-                             echo "<img src='$profilePicture' class='img-fluid round' alt='Profile Picture'>";
-                             echo "<h3>$profileName</h3>";
-                             echo "<h6>$faculty</h6>";
-                             echo "<p>$aboutMe</p>";
-                         }
 
-                        ?>
+
+                        try {
+                          $stmt = $conn->prepare("SELECT profilePicture, profileName, faculty, aboutMe FROM usersDisplayInfo WHERE username = ?");
+                          $stmt->execute([$visitedUsername]); 
+                          $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                      
+                          if ($result) {
+                              echo "<img src='{$result['profilePicture']}' class='img-fluid round' alt='Profile Picture'>";
+                              echo "<h3>{$result['profileName']}</h3>";
+                              echo "<h6>{$result['faculty']}</h6>";
+                              echo "<p>{$result['aboutMe']}</p>";
+                          } else {
+                              echo "No user found with the provided username.";
+                          }
+                      } catch(PDOException $e) {
+                          echo "Error: " . $e->getMessage();
+                      }
+                      ?>
+                        
 
                         <form method="get" action=action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"></form>
                        <div class="buttons">
@@ -68,14 +73,22 @@ session_start();
                              <ul>
                               <?php
                                 $visitedUserHobbies = $_GET['username'];
-                                $db = new mysqli("localhost","root","1234","cosmo");
-                                $sql = "select * from hobbies where username ='$visitedUserHobbies' ";
-                                $result = $db->query($sql);
-                                if($result ->num_rows >0){
-                                  while($row =$result->fetch_assoc()){
-                                    echo "<li> {$row['hobbyName']} </li>";
+                               
+                                try {
+                                  $stmt = $conn->prepare("SELECT hobbyName FROM hobbies WHERE username = ?");
+                                  $stmt->execute([$visitedUserHobbies]);
+                                  $hobbies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                              
+                                  if ($hobbies) {
+                                      foreach ($hobbies as $hobby) {
+                                          echo "<li>{$hobby['hobbyName']}</li>";
+                                      }
+                                  } else {
+                                      echo "No hobbies found for the provided username.";
                                   }
-                                }    
+                              } catch (PDOException $e) {
+                                  echo "Error: " . $e->getMessage();
+                              }
                               ?>
                               </ul> 
                         </div>

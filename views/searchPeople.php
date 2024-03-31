@@ -32,47 +32,38 @@
          <div class="row justify-content-left">
             <!-- <a href="/views/visitProfile.php" -->
                          <?php
-
+                                require_once("../php/dbconfig.php");
                             $registered = $_POST["searchUser"];
                             // echo "$registered";
-                            $db = new mysqli("localhost", "root", "1234", "cosmo");
-                                                    
-                            $stmt = $db->prepare("SELECT  username,profileName,profilePicture    FROM usersDisplayInfo WHERE profileName = ?");
-
-                            $stmt->bind_param("s", $registered);
-
-                            $stmt->execute();
-                            $stmt->store_result();
-
-                            if($stmt->num_rows()>0){
-                                                            
-
-                            $stmt->bind_result( $username,$profileName,$profilePicture);
-                            while ($stmt->fetch()) {
-                                
-                                echo '<div class="col-lg-3 d-flex justify-content-center">';
-                                echo '<div class="profile-component">';
-                                echo '<div style="height: 400px;" class="card-container border border-success">';
-                                echo '<img src="' . $profilePicture . '" class="img-fluid round" alt="Profile Picture">';
-                                echo '<h3 style="margin-top: 25px;">' . $profileName . '</h3>';
-                                echo '<div class="buttons" style="margin-top: 50px;">';
-                                echo '<button class="primary equalWidth">Add Friend</button>';
-                                echo '</div>';
-                                echo '<div class="buttons" style="margin-top: 10px;">';
-                                echo '<a href="../views/visitProfile.php?username=' . urlencode($username) . '"><button class="primary ghost equalWidth">Visit Profile</button></a>';
-                                echo '</div>';
-                                echo '</div>';
-                                echo '</div>';
-                                echo '</div>';
+                            try {
+                                // Assuming $conn is your existing PDO connection object
+                                $stmt = $conn->prepare("SELECT username, profileName, profilePicture FROM usersDisplayInfo WHERE profileName = ?");
+                                $stmt->execute([$registered]);
+                                $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                            
+                                if ($users) {
+                                    foreach ($users as $user) {
+                                        echo '<div class="col-lg-3 d-flex justify-content-center">';
+                                        echo '<div class="profile-component">';
+                                        echo '<div style="height: 400px;" class="card-container border border-success">';
+                                        echo '<img src="' . $user['profilePicture'] . '" class="img-fluid round" alt="Profile Picture">';
+                                        echo '<h3 style="margin-top: 25px;">' . $user['profileName'] . '</h3>';
+                                        echo '<div class="buttons" style="margin-top: 50px;">';
+                                        echo '<button class="primary equalWidth">Add Friend</button>';
+                                        echo '</div>';
+                                        echo '<div class="buttons" style="margin-top: 10px;">';
+                                        echo '<a href="../views/visitProfile.php?username=' . urlencode($user['username']) . '"><button class="primary ghost equalWidth">Visit Profile</button></a>';
+                                        echo '</div>';
+                                        echo '</div>';
+                                        echo '</div>';
+                                        echo '</div>';
+                                    }
+                                } else {
+                                    // Handle case where no user is found
                                 }
-                                
-                            }else{
-                                
-                                
-
-
+                            } catch (PDOException $e) {
+                                echo "Error: " . $e->getMessage();
                             }
-                        
 
 
                         ?>

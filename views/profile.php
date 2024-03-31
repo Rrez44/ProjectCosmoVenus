@@ -5,6 +5,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header('Location: /cosmovenus/views/Login_Register/loginForm.html');
     exit;
 }
+require_once("../php/dbconfig.php");
 ?>
 
 <!DOCTYPE html>
@@ -51,21 +52,23 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                         //  session_start();
                         $registered = $_SESSION["user_id"];
 
-                        $db = new mysqli("localhost", "root", "1234", "cosmo");
-
-                        $stmt = $db->prepare("SELECT profilePicture, profileName, faculty, aboutMe FROM usersDisplayInfo WHERE username = ?");
-
-                        $stmt->bind_param("s", $registered);
-
-                        $stmt->execute();
-
-                        $stmt->bind_result($profilePicture, $profileName, $faculty, $aboutMe);
-                        while ($stmt->fetch()) {
-                            echo "<img src='$profilePicture' class='img-fluid round' alt='Profile Picture'>";
-                            echo "<h3>$profileName</h3>";
-                            echo "<h6>$faculty</h6>";
-                            echo "<p>$aboutMe</p>";
-                        }
+                        try {
+                          // Assuming $conn is your existing PDO connection object
+                          $stmt = $conn->prepare("SELECT profilePicture, profileName, faculty, aboutMe FROM usersDisplayInfo WHERE username = ?");
+                          $stmt->execute([$registered]);
+                          $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                      
+                          if ($result) {
+                              echo "<img src='{$result['profilePicture']}' class='img-fluid round' alt='Profile Picture'>";
+                              echo "<h3>{$result['profileName']}</h3>";
+                              echo "<h6>{$result['faculty']}</h6>";
+                              echo "<p>{$result['aboutMe']}</p>";
+                          } else {
+                              echo "No user found with the provided username.";
+                          }
+                      } catch (PDOException $e) {
+                          echo "Error: " . $e->getMessage();
+                      }
 
 
                         ?>
@@ -81,15 +84,21 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                             <h6>Hobbies</h6>
                             <ul>
                                 <?php
-                                $registered = $_SESSION["user_id"];
-                                $db = new mysqli("localhost","root","1234","cosmo");
-                                $sql = "select * from hobbies where username ='$registered' ";
-                                $result = $db->query($sql);
-                                if($result ->num_rows >0){
-                                    while($row =$result->fetch_assoc()){
-                                        echo "<li> {$row['hobbyName']} </li>";
-                                    }
-                                }
+                                
+                                      try {
+                                        // Assuming $conn is your existing PDO connection object
+                                        $stmt = $conn->prepare("SELECT hobbyName FROM hobbies WHERE username = ?");
+                                        $stmt->execute([$registered]);
+                                        $hobbies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                                        if ($hobbies) {
+                                            foreach ($hobbies as $row) {
+                                                echo "<li>{$row['hobbyName']}</li>";
+                                            }
+                                        }
+                                      } catch (PDOException $e) {
+                                        echo "Error: " . $e->getMessage();
+                                      }
                                 ?>
                             </ul>
                         </div>
