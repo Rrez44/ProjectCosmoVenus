@@ -5,7 +5,20 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header('Location: /cosmovenus/views/Login_Register/loginForm.html');
     exit;
 }
-require_once("../php/dbconfig.php");
+
+
+$otherUsername = isset($_GET['username']) ? trim(htmlspecialchars( $_GET['username'])) : null;
+$isOwnProfile = true;
+
+
+
+
+if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
+    $isOwnProfile = false;
+
+} else {
+    $otherUsername = $_SESSION["user_id"];
+    }
 ?>
 
 <!DOCTYPE html>
@@ -15,25 +28,20 @@ require_once("../php/dbconfig.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
     <link rel="stylesheet" href="../css/nav.css">
-    
+
     <script src="https://kit.fontawesome.com/74cd7f5a15.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/profilePictureComponent.css">
     <link rel="stylesheet" href="../css/profile.css">
     <style>
-      .comment-list .round {
-          border: 1px solid #1DB954;
-          border-radius: 50%;
-          padding: 2px;
-          max-width: 50px;
-          max-height: 50px;
-          min-width: 50px;
-          min-height: 50px;
-          object-fit: cover;
-          object-position: center;
+      .card-container{
+          height: 100%;
+      }
+      .skills{
+          max-height: 500px;
       }
     </style>
 </head>
@@ -42,33 +50,32 @@ require_once("../php/dbconfig.php");
         <?php
         require_once("../views/navbar.php")
         ?>
-       
+        <!-- NAVEND -->
+        <!-- PROFILE COMPONENT STARTS HERE -->
         <div class="row justify-content-center">
             <div class="col-lg-3 d-flex justify-content-center">
-                <div class="profile-component">
+                <div class="profile-component"  >
                     <div class="card-container border border-success">
 
                         <?php
                         //  session_start();
-                        $registered = $_SESSION["user_id"];
 
-                        try {
-                          // Assuming $conn is your existing PDO connection object
-                          $stmt = $conn->prepare("SELECT profilePicture, profileName, faculty, aboutMe FROM usersDisplayInfo WHERE username = ?");
-                          $stmt->execute([$registered]);
-                          $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                      
-                          if ($result) {
-                              echo "<img src='{$result['profilePicture']}' class='img-fluid round' alt='Profile Picture'>";
-                              echo "<h3>{$result['profileName']}</h3>";
-                              echo "<h6>{$result['faculty']}</h6>";
-                              echo "<p>{$result['aboutMe']}</p>";
-                          } else {
-                              echo "No user found with the provided username.";
-                          }
-                      } catch (PDOException $e) {
-                          echo "Error: " . $e->getMessage();
-                      }
+
+                        $db = new mysqli("localhost", "root", "", "cosmo");
+
+                        $stmt = $db->prepare("SELECT profilePicture, profileName, faculty, aboutMe FROM usersDisplayInfo WHERE username = ?");
+
+                        $stmt->bind_param("s", $otherUsername);
+
+                        $stmt->execute();
+
+                        $stmt->bind_result($profilePicture, $profileName, $faculty, $aboutMe);
+                        while ($stmt->fetch()) {
+                            echo "<img src='$profilePicture' class='img-fluid round' alt='Profile Picture'>";
+                            echo "<h3>$profileName</h3>";
+                            echo "<h6>$faculty</h6>";
+                            echo "<p>$aboutMe</p>";
+                        }
 
 
                         ?>
@@ -84,21 +91,15 @@ require_once("../php/dbconfig.php");
                             <h6>Hobbies</h6>
                             <ul>
                                 <?php
-                                
-                                      try {
-                                        // Assuming $conn is your existing PDO connection object
-                                        $stmt = $conn->prepare("SELECT hobbyName FROM hobbies WHERE username = ?");
-                                        $stmt->execute([$registered]);
-                                        $hobbies = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                                        if ($hobbies) {
-                                            foreach ($hobbies as $row) {
-                                                echo "<li>{$row['hobbyName']}</li>";
-                                            }
-                                        }
-                                      } catch (PDOException $e) {
-                                        echo "Error: " . $e->getMessage();
-                                      }
+                                $registered = $_SESSION["user_id"];
+                                $db = new mysqli("localhost","root","","cosmo");
+                                $sql = "select * from hobbies where username ='$otherUsername' ";
+                                $result = $db->query($sql);
+                                if($result ->num_rows >0){
+                                    while($row =$result->fetch_assoc()){
+                                        echo "<li> {$row['hobbyName']} </li>";
+                                    }
+                                }
                                 ?>
                             </ul>
                         </div>
@@ -111,11 +112,7 @@ require_once("../php/dbconfig.php");
                     <div class="card mb-3 bg-dark border-success jumbo-container">
                         <img class="card-img-top" style="border-radius: 5% 5% 0px 0px; max-height: 200px; object-fit: cover;" src="https://wallpapers.com/images/hd/ultrawide-4k-u69bk8p5x2no56dj.jpg" alt="Card image cap">
                         <div class="card-body">
-                        <?php
-
-                            $registered ='@'. $_SESSION["user_id"];
-                              echo "<h5 class='card-title'>$registered </h5>";
-                        ?>
+                          <h5 class="card-title">@rrez44</h5>
                             <hr>
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-3 col-md-3 col-sm-6 small-screen-query d-flex justify-content-center">
@@ -139,7 +136,7 @@ require_once("../php/dbconfig.php");
                                       </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 small-screen-query d-flex justify-content-center">
-                                    <div class="card bg-dark stat-card"> 
+                                    <div class="card bg-dark stat-card">
                                         <img class="card-img-top" src="../images/profileIcons/matches.png" alt="Card image cap">
                                         <hr>
                                         <div class="card-body">
@@ -176,18 +173,15 @@ require_once("../php/dbconfig.php");
         <div class="p-2">
           <button class="btn btn-success">Share <i class="fa-solid fa-share"></i></button>
         </div>
-        <div class="p-2">
-         <button id="setupProfileBtn" class="btn btn-success">Set Up Profile</button>
-        </div>
       </div>
     </div>
-    
+
 
     <div class="container-fluid" >
       <div class="row d-flex justify-content-start mx-4 post-container" id="postContainer">
       </div>
     </div>
-        
+
     </div>
   </div>
   <!-- ADD POST -->
@@ -202,7 +196,7 @@ require_once("../php/dbconfig.php");
       </div>
       <div class="modal-body">
         <form action="../php/addPost.php" method="post" enctype="multipart/form-data">
-          <div class="row"> 
+          <div class="row">
           <div class="col custom-file">
             <input type="file" class="custom-file-input" id="customFile" name="postImage" >
           </div>
@@ -286,20 +280,21 @@ require_once("../php/dbconfig.php");
 <!--    load posts-->
     <script>
         $(document).ready(function() {
-            // Function to load posts
+            var profileUsername = '<?php echo $otherUsername; ?>';
             function loadPosts() {
                 $.ajax({
-                    type: "GET",
+                    type: "POST",
                     url: "../php/loadPosts.php",
+                    data: {username: profileUsername},
                     success: function(response) {
                         $('#postContainer').append(response);
-                        
                     },
                     error: function(xhr, status, error) {
                         console.error(xhr.responseText);
                     }
                 });
             }
+
             loadPosts();
         });
     </script>
@@ -345,10 +340,9 @@ require_once("../php/dbconfig.php");
                     data: { postId: postId },
                     success: function(response) {
                         likesCountElement.text(currentLikes - 1);
-                        clickedElement.removeClass('fa-solid').addClass('fa-regular'); // Change the icon
+                        clickedElement.removeClass('fa-solid').addClass('fa-regular');
                     },
                     error: function(xhr, status, error) {
-                        // On error, alert the user and do not change the UI
                         alert('Failed to unlike the post. Please try again.');
                         console.error("Error responseText:", xhr.responseText);
                     }
@@ -419,7 +413,7 @@ require_once("../php/dbconfig.php");
         });
     </script>
 
-    
+    <!-- save comment to server -->
     <script>
       $(document).ready(() => {
         $('#saveCommentButton').on('click', (e) => {
@@ -443,13 +437,8 @@ require_once("../php/dbconfig.php");
         });
         }
       )
-
-      $("#setupProfileBtn").click(function(e) {
-            e.preventDefault(); 
-      window.location.href = '../views/setUpProfile.php'; 
-            });
-
     </script>
+
 
 </body>
 </html>
