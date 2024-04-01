@@ -1,11 +1,11 @@
 
-function onclickbtn(){
+// function onclickbtn(){
 
-  var allinputs =document.querySelectorAll(".inputSame");
-  allinputs.forEach(singleinput =>singleinput.value="");
+//     document.getElementById("profileForm").reset();
+// }
 
 
-}
+
 function changeInfo(inputInfo,toBeChanged){
 
   var username = document.getElementById(`${inputInfo}`);
@@ -63,7 +63,7 @@ fileInput.addEventListener('change',function(){
 
 document.getElementById("discard").addEventListener("click",function(e){
   e.preventDefault();
-  var allinputs =document.querySelectorAll(".inputSame");
+  var allinputs =document.querySelectorAll(".form-control");
   allinputs.forEach(singleinput =>singleinput.value="");
 })
 

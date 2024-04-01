@@ -26,8 +26,16 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/profile.css">
     <link rel="stylesheet" href="../css/profilePictureComponent.css">
-    <link rel="stylesheet" href="../css/setUpProfile.css">
+    <link rel="stylesheet" href="../css/SetUpProfile/setupprofile.css">
 
+    <!-- <style>
+        .custom-input{
+            color: green;
+        }
+
+    </style> -->
+
+    
 </head>
 <body>
 <div class="container-fluid">
@@ -88,6 +96,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                         <button class="primary ghost">
                             Friends
                         </button>
+                        <!-- <h3 class="hi">Hello</h3> -->
                     </div>
                     <div class="skills">
                         <h6>Hobbies</h6>
@@ -95,7 +104,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                             <?php
                             if($_SESSION["logged_in"]){
                             }else{
-                                echo "<li>   </li>";
+                                echo "<li>  </li>";
                             }
                             // ?>
                         </ul>
@@ -104,52 +113,65 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             </div>
         </div>
         <div class="col-lg-8">
-            <div class="jumbotron jumbotron-fluid d-flex justify-content-center align-items-center">
-                <div class="container-fluid">
-                    <div class="card mb-3 bg-dark border-success jumbo-container">
+            <div  class="jumbotron jumbotron-fluid d-flex justify-content-center align-items-center">
+                <div  class="container-fluid">
+                    <div style="padding-bottom: 590px;" class="card mb-3 bg-dark border-success jumbo-container">
+
+                        <form style="margin-left: 40px;" id="profileForm"   action="../php/setUpProfile.php" method="post" enctype="multipart/form-data"  >
+                        <div class="row justify-content-center sameStyle" style="margin-top: 10px;">
+                            <div class="col-md-8">
+                               <p class="form-label">Profile Name:</p>
+                                    <input type="text" id="username" class="form-control theSameClass " name="username" required>
+                                    </div>
+                                </div>
 
 
-
-                        <form   action="../php/setUpProfile.php" method="post" enctype="multipart/form-data"  >
-
-                            <div class="row justify-content-start sameStyleParagraph">
-                                <div class="col-md-3"><p class="allParagraphs">Profile Name:</p></div>
-
-                                <div class="col-md-3"><p class="allParagraphs2" >Change Profile Picture:</p></div>
+                                <div class="row justify-content-center sameStyle" style="margin-top: 10px;">
+                                <div class="col-md-8">
+                                <p class="form-label">Profile Picture</p>
+                                <label for="inputFile" class="btn theSameClass form-control">Select Image</label>
+                                <input id="inputFile" accept="image/png, image/jpeg" name="inputfile" class="form-control" " type="file" title="" required>
+                            
+                            </div>
+                        </div>
+                            
+                        <div class="row justify-content-center sameStyle" style="margin-top: 10px;">
+                            <div class="col-md-8">
+                                        
+                                    <p class="allParagraphs form-label">Faculty:</p>
+                                    <input   class="form-control theSameClass" id="faculty" name="faculty" type="text" required>
+                                </div>
                             </div>
 
-                            <div class="row justify-content-start sameStyle">
-                                <div class="col-md-3"><input type="text" id="username" class="inputSame" name="username" required></div>
-
-                                <div class="col-md-3"><input id="inputFile" accept="image/png, image/jpeg" name="inputfile" class="inputSame2" type="file" title="" required></div>
-                                <label for="inputFile" class="labelBtn">Choose a file</label>
-
-                            </div>
-                            <hr class="lineWidth"><hr class="lineWidth2">
-
-
-                            <div class="row justify-content-start sameStyleParagraph">
-                                <div class="col-md-3"><p class="allParagraphs">Faculty:</p></div>
-                                <div class="col-md-3"><p class="allParagraphs2" >Select Hobbies:</p></div>
-
+                            <div class="row justify-content-center sameStyle" style="margin-top: 10px;">
+                            <div class="col-md-8">
+                                                           <p class="allParagraphs form-label">Hobbies:</p>
+                                <button type="button" class="col-md-3 btn btn-primary form-control  theSameClass" name="hobbies" data-toggle="modal" data-target="#exampleModal">Select</button>
+                                </div>
                             </div>
 
-                            <div class="row justify-content-start sameStyle" style="margin-top: 10px;">
-
-                                <div class="col-md-3"><input class="inputSame" id="faculty" name="faculty" type="text" required></div>
-                                <button type="button" class="col-md-3 btn btn-primary selectHobbies inputSame" name="hobbies" data-toggle="modal" data-target="#exampleModal">Select</button>
+                            <div class="row justify-content-center sameStyle" style="margin-top: 10px;">
+                            <div class="col-md-8">
+                                                              <p class="allParagraphs form-label">About Me:</p>    
+                                <textarea class="form-control theSameClass" id="aboutme" name="aboutme" style="height: 150px; resize: none;"></textarea>
                             </div>
-                            <hr class="lineWidth"><hr class="lineWidth2">
-                            <div class="row justify-content-start sameStyleParagraph">
-                                <div class="col-md-3"><p class="allParagraphs">About Me:</p></div>
+                            </div>
+                            
+                            <div class="row justify-content-center sameStyle" style="margin-top: 10px;">
+                            <div class="col-md-4">
+                                
+                                <input type="submit" style="background-color:#1DB954;border: none;color:black;
+    outline: none; " class="form-control submitButton" value="Save changes"></div>
+                                <div class="col-md-4">
+                                
+                                <input  style="display:inline-block;" type="submit" id="discard" onclick="clearForm()" class="  form-control theSameClass" value="Discard">
+                            </div>
+                            </div>
+                               
                             </div>
 
-                            <div class="row justify-content-start sameStyle" style="margin-top: 10px;">
-                                <div class="col-md-3"><textarea class="inputSame" id="aboutme" name="aboutme" style="height: 150px; resize: none;"></textarea></div>
-                                <div class="col-md-3"><input type="submit" id="discard" onclick="onclickbtn()" class="lastButtons lastButtonsDiscard" value="Discard"></div>
-                                <div class="col-md-3"><input type="submit"  class="lastButtons lastButtonsSubmit" value="Save changes"></div>
 
-                            </div>
+                  
                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div style="background-color: #222222;" class="modal-dialog" role="document">
                                     <div style="background-color:#222222;" class="modal-content">
@@ -162,18 +184,18 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                                         <div class="modal-body">
                                             <!-- <div class="button"> -->
                                             <input type="radio" id="a25" name="check-substitution-1"  value="UI/UX"/>
-                                            <label class="btn btn-default" for="a25">UI/UX</label>
+                                            <label style="color: white;" class="btn btn-default" for="a25">UI/UX</label>
                                             <!-- </div> -->
                                             <!-- <div class="button"> -->
                                             <input type="radio" id="a50" name="check-substitution-2" value="JAVA" />
-                                            <label class="btn btn-default" for="a50">JAVA</label>
+                                            <label style="color: white;" class="btn btn-default" for="a50">JAVA</label>
                                             <!-- </div> -->
                                             <!-- <div class="button"> -->
                                             <input type="radio" id="a75" name="check-substitution-3" value="CSS" />
-                                            <label class="btn btn-default" for="a75">CSS</label>
+                                            <label style="color: white;" class="btn btn-default" for="a75">CSS</label>
 
                                             <input type="radio" id="a100" name="check-substitution-4" value="C++" />
-                                            <label class="btn btn-default" for="a100">C++</label>
+                                            <label style="color: white;" class="btn btn-default" for="a100">C++</label>
                                             <!-- </div> -->
                                             </ul>
                                         </div>
@@ -188,6 +210,21 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                 </div>
             </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
 </div>
 </body>
@@ -202,10 +239,20 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 </div>
 <script src="../JS/setUpprofile.js" defer></script>
 
-</bod y>
+</body>
+
+                           
 
 
 <script>
+    $("#inputFile").change(function() {
+  filename = this.files[0].name;
+  console.log(filename);
+});
+function clearForm() {
+        document.getElementById("profileForm").reset();
+    }
+
     const radioButtons = document.querySelectorAll('input[type="radio"]');
 
     radioButtons.forEach(function(button) {

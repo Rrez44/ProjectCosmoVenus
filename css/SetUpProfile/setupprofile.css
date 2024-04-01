@@ -1,140 +1,135 @@
-.sameStyle{
-    margin-top: 0px;
-    margin-left:50px ;
-    /* background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important; */
-    /* background-color: ; */
+input.theSameClass,
+button.theSameClass,
+textarea.theSameClass
+{
+  background-color:#222222 !important;
+
+  color: white !important;
+  border: none;
+  outline: none;
+  padding:5px;
+  border-radius: 2px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+}
+.form-control:focus {
+  border-color: transparent; /* Make the border color transparent */
+  box-shadow: none; /* Remove any box shadow */
+}
+label.theSameClass{
+  background-color:#222222 !important;
+  /* width: 400px; */
+  color: white !important;
+  border: none;
+  outline: none;
+  padding:5px;
+  border-radius: 2px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+}
+button.submitButton{
+  background-color: #1DB954 !important;
+  margin-top: -1px;
+  padding: 0;
+  height: 35px;
+  color: white;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+  background-color:#222222 !important;
+  text-align: center;
+  width: 150px;
+  /* margin-left: 275px; */
+  border: none;
+  outline: none;
 }
 
 
-.inputSame{
-    background-color:#222222 !important;
-    color: white;
-    width: 300px;
-    border: none;
-    outline: none;
-    padding:5px;
-    border-radius: 2px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
-
-}
-
-.sameStyleParagraph{
-    margin-left:50px ;
-    margin-top: 20px;
-}
-
-.allParagraphs{
-    color: white ;
-
-}
-
-
-.lineWidth{
-    color: white;
-    margin-left: 60px;
-    width: 300px;
-}
-.allParagraphs2{
-    position: absolute;
-    margin-left:300px ;
-    float: right;
-    color: white;
-}
-
-.inputSame2{
-    margin-left: 300px;
-    color: black;
-    display: none;
-    
-}
-
-input::file-selector-button {
-    background-color:#222222 !important;
-    color: white;
-    border: none;
-    outline: none;
-    padding:5px;
-    /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4); */
-    /* box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); */
-    border-radius: 2px;
-
-    
-  }
-
-  .lineWidth2{
-    color: white;
-    margin-top: -16.4px;
-    margin-left:600px ;
-    width: 300px;
-  }
-  
 input[type='file'] {
-    color: rgba(0, 0, 0, 0);
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
-    text-align: center;
-  }
+  /* position: absolute; */
+  /* top: 0; */
+  /* right: 0; */
+  /* margin: 0; */
+  /* padding: 0; */
+  display: none;
+  background-color: #222222;
+  /* font-size: 20px; */
+  cursor: pointer;
+  /* opacity: 0; */
+  color: black;
+}
 
 
+.hobbiesSelected{
+  /* margin-top: -1px; */
+  /* padding: 0; */
+  /* height: 35px; */
+  color: white !important;
+  /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4); */
+  /* background-color:#222222 !important; */
+  /* text-align: center; */
+  /* width: 150px; */
+  /* border: none; */
+  /* outline: none; */
+}
 
 
-  .selectHobbies{
-    margin-left: 310px;
-  }
+.close{
+  background-color: #1DB954;
+}
 
+/* .button {
+float: left;
+margin: 0 5px 0 0;
+width: 100px;
+height: 40px;
+position: relative;
+}
 
-  .labelBtn{
-    margin-top: -1px;
-    /* padding: 2px; */
-    padding: 0;
-    height: 35px;
-    color: white;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
-    background-color:#222222 !important;
-        text-align: center;
-    width: 300px;
-    margin-left: 75px;
-  }
+.button label,
+.button input {
+display: block;
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+}
 
+.button input[type="radio"] {
+opacity: 0.011;
+z-index: 100;
+}
 
-  .lastButtons{
-    margin-top: -1px;
-    padding: 0;
-    height: 35px;
-    color: white;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
-    background-color:#222222 !important;
-    text-align: center;
-    width: 150px;
-    /* margin-left: 275px; */
-    border: none;
-    outline: none;
-  }
+.button input[type="radio"]:checked + label {
+background: #20b8be;
+border-radius: 4px;
+}
 
-  .lastButtonsSubmit{
-    margin-left: 220px;
-    background-color: #1DB954 !important;
-  }
+.button label {
+cursor: pointer;
+z-index: 90;
+line-height: 1.8em;
+}
+*/
 
+input[type="radio"] {
+  color: white;
+  display: none;
+}
 
-  .lastButtonsDiscard{
-    margin-left: 290px;
-    position: relative;
-  }
+/* Style the label */
+label {
+  margin-top: 10px;
+  padding: 0;
+  height: 35px;
+  color: white;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+  text-align: center;
+  width: 110px;
+  border: none;
+  outline: none;  display: inline-block;
+  padding: 5px 10px;
+  cursor: pointer;
+}
 
-  .hobbiesSelected{
-    /* margin-top: -1px; */
-    /* padding: 0; */
-    /* height: 35px; */
-    color: white !important;
-    /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4); */
-    /* background-color:#222222 !important; */
-    /* text-align: center; */
-    /* width: 150px; */
-    /* border: none; */
-    /* outline: none; */
-  }
-
-
-  .close{
-    background-color: #1DB954;
-  }
+input[type="radio"]:checked + label {
+  background-color: #1DB954;
+  color: #fff;
+}

@@ -1,5 +1,7 @@
 
 <?php
+    require ("../php/dbconfig.php");
+
 session_start();
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header('Location: /cosmovenus/views/Login_Register/loginForm.html');
@@ -59,26 +61,23 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
 
                         <?php
                         //  session_start();
-
-
-                        $db = new mysqli("localhost", "root", "", "cosmo");
-
-                        $stmt = $db->prepare("SELECT profilePicture, profileName, faculty, aboutMe FROM usersDisplayInfo WHERE username = ?");
-
-                        $stmt->bind_param("s", $otherUsername);
-
-                        $stmt->execute();
-
-                        $stmt->bind_result($profilePicture, $profileName, $faculty, $aboutMe);
-                        while ($stmt->fetch()) {
-                            echo "<img src='$profilePicture' class='img-fluid round' alt='Profile Picture'>";
-                            echo "<h3>$profileName</h3>";
-                            echo "<h6>$faculty</h6>";
-                            echo "<p>$aboutMe</p>";
+                        
+                        try {
+                            // Assuming $conn is your existing PDO connection object
+                            $stmt = $conn->prepare("SELECT profilePicture, profileName, faculty, aboutMe FROM usersDisplayInfo WHERE username = ?");
+                            $stmt->execute([$otherUsername]);
+                            $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+                        
+                            if ($userInfo) {
+                                echo "<img src='{$userInfo['profilePicture']}' class='img-fluid round' alt='Profile Picture'>";
+                                echo "<h3>{$userInfo['profileName']}</h3>";
+                                echo "<h6>{$userInfo['faculty']}</h6>";
+                                echo "<p>{$userInfo['aboutMe']}</p>";
+                            }
+                        } catch (PDOException $e) {
+                            echo "Error: " . $e->getMessage();
                         }
-
-
-                        ?>
+                        ?>                       
                         <div class="buttons">
                             <button class="primary">
                                 Message
@@ -87,20 +86,25 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
                                 Friends
                             </button>
                         </div>
-                        <div class="skills">
+                        <div class="skills" >
                             <h6>Hobbies</h6>
                             <ul>
                                 <?php
                                 $registered = $_SESSION["user_id"];
-                                $db = new mysqli("localhost","root","","cosmo");
-                                $sql = "select * from hobbies where username ='$otherUsername' ";
-                                $result = $db->query($sql);
-                                if($result ->num_rows >0){
-                                    while($row =$result->fetch_assoc()){
-                                        echo "<li> {$row['hobbyName']} </li>";
-                                    }
-                                }
-                                ?>
+                                try {
+                                  // Assuming $conn is your existing PDO connection object
+                                  $stmt = $conn->prepare("SELECT hobbyName FROM hobbies WHERE username = ?");
+                                  $stmt->execute([$registered]);
+                                  $hobbies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                              
+                                  if ($hobbies) {
+                                      foreach ($hobbies as $row) {
+                                          echo "<li>{$row['hobbyName']}</li>";
+                                      }
+                                  }
+                              } catch (PDOException $e) {
+                                  echo "Error: " . $e->getMessage();
+                              } ?>
                             </ul>
                         </div>
                     </div>
@@ -172,6 +176,9 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
         </div>
         <div class="p-2">
           <button class="btn btn-success">Share <i class="fa-solid fa-share"></i></button>
+        </div>
+        <div class="p-2">
+          <a href="../views/setUpProfile.php"><button id="setupProfileButton" class="btn btn-success">Set Up profile</button></a>
         </div>
       </div>
     </div>
@@ -258,6 +265,13 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
     </div>
   </div>
 </div>
+<!-- <a href="../php/setUpProfile.php" -->
+    <!-- <script>
+         document.getElementById("setupProfileButton").addEventListener("click", function() {
+            window.location.href = "../php/setUpProfile.php";
+        });
+
+    </script> -->
 
 
     <!-- LOG OUT -->
