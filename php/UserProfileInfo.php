@@ -8,8 +8,9 @@ class UserProfileInfo
     private string $aboutMe;
     private string $profilePicture;
     private array $hobbies;
+    private string $bannerPicture;
 
-    public function __construct(string $username, string $profileName, string $faculty, string $aboutMe, string $profilePicture, array $hobbies)
+    public function __construct(string $username, string $profileName, string $faculty, string $aboutMe, string $profilePicture, array $hobbies, string $bannerPicture)
     {
         $this->username = $username;
         $this->profileName = $profileName;
@@ -17,6 +18,7 @@ class UserProfileInfo
         $this->aboutMe = $aboutMe;
         $this->profilePicture = $profilePicture;
         $this->hobbies = $hobbies;
+        $this->bannerPicture=$bannerPicture;
     }
 
     public function saveUsers(PDO $db): void
@@ -27,24 +29,26 @@ class UserProfileInfo
         $userCount = (int) $statement->fetchColumn();
 
         if ($userCount === 0) {
-            $sql = "INSERT INTO usersDisplayInfo (username, profileName, faculty, aboutMe, profilePicture) VALUES (:username, :profileName, :faculty, :aboutMe, :profilePicture)";
+            $sql = "INSERT INTO usersDisplayInfo (username, profileName, faculty, aboutMe, profilePicture,bannerPicture) VALUES (:username, :profileName, :faculty, :aboutMe, :profilePicture,:bannerPicture)";
             $stmt = $db->prepare($sql);
             $stmt->execute([
                 ':username' => $this->username,
                 ':profileName' => $this->profileName,
                 ':faculty' => $this->faculty,
                 ':aboutMe' => $this->aboutMe,
-                ':profilePicture' => $this->profilePicture
+                ':profilePicture' => $this->profilePicture,
+                ':bannerPicture' =>$this->bannerPicture
             ]);
         } else {
-            $sql = "UPDATE usersDisplayInfo SET profileName = :profileName, faculty = :faculty, aboutMe = :aboutMe, profilePicture = :profilePicture WHERE username = :username";
+            $sql = "UPDATE usersDisplayInfo SET profileName = :profileName, faculty = :faculty, aboutMe = :aboutMe, profilePicture = :profilePicture, bannerPicture=:bannerPicture WHERE username = :username";
             $stmt = $db->prepare($sql);
             $stmt->execute([
                 ':username' => $this->username,
                 ':profileName' => $this->profileName,
                 ':faculty' => $this->faculty,
                 ':aboutMe' => $this->aboutMe,
-                ':profilePicture' => $this->profilePicture
+                ':profilePicture' => $this->profilePicture,
+                ':bannerPicture' => $this->bannerPicture
             ]);
         }
     }

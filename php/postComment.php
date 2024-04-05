@@ -28,7 +28,10 @@ class PostComment
 
 
     public function saveComment(){
-        global $conn;
+//        global $conn;
+        $db = DbConn::instanceOfDb();
+
+        $conn=$db->getConnection();
             $stmt = $conn->prepare("INSERT INTO postComments (commentId, postId, userName, text,postTime) VALUES (:commentId, :postId,:commenter, :text, :postTime)");
             $stmt->bindParam(":commentId", $this->commentId);
             $stmt->bindParam(":postId", $this->postId);
@@ -45,7 +48,10 @@ class PostComment
     private function generateCommentId(){
         return $this->commenter . $this->postTime->format('YmdHisu');    }
     public static function loadPostComments($postId){
-        global $conn;
+//        global $conn;
+        $db = DbConn::instanceOfDb();
+
+        $conn=$db->getConnection();
         try {
             $stmt = $conn->prepare("SELECT userName,text,postTime FROM postcomments where postId = :postId order by postTime desc");
             $stmt->bindParam(":postId", $postId);

@@ -61,10 +61,10 @@ fileInput.addEventListener('change',function(){
 })
 
 
-document.getElementById("discard").addEventListener("click",function(e){
-  e.preventDefault();
-  var allinputs =document.querySelectorAll(".form-control");
-  allinputs.forEach(singleinput =>singleinput.value="");
-})
+// document.getElementById("discard").addEventListener("click",function(e){
+//   e.preventDefault();
+//   var allinputs =document.querySelectorAll(".form-control");
+//   allinputs.forEach(singleinput =>singleinput.value="");
+// })
 
 

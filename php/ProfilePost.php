@@ -101,7 +101,10 @@ class ProfilePost implements JsonSerializable
      */
     public function save()
     {
-        global $conn;
+//        global $conn;
+        $db = DbConn::instanceOfDb();
+        $conn=$db->getConnection();
+
         $checkExisting = $conn->prepare("SELECT * from userPosts where postId = :postId");
         $checkExisting->bindParam(':postId', $this->postId);
         $checkExisting->execute();
@@ -127,7 +130,10 @@ class ProfilePost implements JsonSerializable
     public static function loadPost($postId): ?ProfilePost
     {
         try {
-            global $conn;
+//            global $conn;
+            $db = DbConn::instanceOfDb();
+
+            $conn=$db->getConnection();
             $post = $conn->prepare("SELECT * FROM userposts WHERE postId = :postId");
             $post->bindParam(":postId", $postId);
             $post->execute();

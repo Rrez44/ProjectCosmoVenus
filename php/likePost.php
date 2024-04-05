@@ -11,7 +11,9 @@ if(isset($_SESSION['user_id']) && isset($_POST['postId'])) {
 
     try {
 
-        global $conn;
+//        global $conn;
+        $db = DbConn::instanceOfDb();
+        $conn=$db->getConnection();
         $postFinder = $conn->prepare("INSERT INTO postLikes (liker, postId) VALUES (:liker, :postId)");
 
         $postFinder->bindParam(":liker", $liker);

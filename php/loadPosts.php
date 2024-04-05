@@ -7,8 +7,11 @@ session_start();
 
 $userName = isset($_POST['username']) ? $_POST['username'] : $_SESSION['user_id'];
 
-global $conn;
+//global $conn;
+//$conn =getDbCon();
+$db = DbConn::instanceOfDb();
 
+$conn=$db->getConnection();
 $loadPosts = $conn->prepare("SELECT * FROM userposts WHERE poster = :userName ORDER BY timeOfPost DESC");
 $loadPosts->bindParam(":userName", $userName);
 $loadPosts->execute();

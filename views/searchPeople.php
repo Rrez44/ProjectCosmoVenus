@@ -36,7 +36,9 @@
                             $registered = $_POST["searchUser"];
                             // echo "$registered";
                             try {
-                                // Assuming $conn is your existing PDO connection object
+                                $db = DbConn::instanceOfDb();
+                                $conn=$db->getConnection();
+
                                 $stmt = $conn->prepare("SELECT username, profileName, profilePicture FROM usersDisplayInfo WHERE profileName = ?");
                                 $stmt->execute([$registered]);
                                 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -52,14 +54,14 @@
                                         echo '<button class="primary equalWidth">Add Friend</button>';
                                         echo '</div>';
                                         echo '<div class="buttons" style="margin-top: 10px;">';
-                                        echo '<a href="../views/visitProfile.php?username=' . urlencode($user['username']) . '"><button class="primary ghost equalWidth">Visit Profile</button></a>';
+                                        echo '<a href="../views/profile.php?username=' . urlencode($user['username']) . '"><button class="primary ghost equalWidth">Visit Profile</button></a>';
                                         echo '</div>';
                                         echo '</div>';
                                         echo '</div>';
                                         echo '</div>';
                                     }
                                 } else {
-                                    // Handle case where no user is found
+                                    echo "<h1>No User FOUND </h1>";
                                 }
                             } catch (PDOException $e) {
                                 echo "Error: " . $e->getMessage();

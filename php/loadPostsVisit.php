@@ -6,7 +6,10 @@ include_once 'User.php';
 session_start();
 
 
-global $conn;
+//global $conn;
+$db = DbConn::instanceOfDb();
+
+$conn=$db->getConnection();
 if (isset($_GET['username'])) {
     $userName = $_GET['username'];
 

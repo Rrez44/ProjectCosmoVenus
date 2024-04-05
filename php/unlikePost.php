@@ -2,8 +2,10 @@
 include_once 'dbconfig.php';
 
 
-global $conn;
+//global $conn;
+$db = DbConn::instanceOfDb();
 
+$conn=$db->getConnection();
 session_start();
 $liker = $_SESSION['user_id'];
 $postId = trim(htmlspecialchars($_POST['postId']));

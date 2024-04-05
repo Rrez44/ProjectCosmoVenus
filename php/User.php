@@ -49,9 +49,14 @@ class User {
         else return $age;
     }
     public static function getUser($username){
-       global $conn;
+//       global $conn;
+//        $conn =getDbCon();
+        $db = DbConn::instanceOfDb();
 
-       $stmt = $conn->prepare("SELECT * FROM users where userName = :userName");
+        $conn=$db->getConnection();
+//        var_dump($conn);
+
+        $stmt = $conn->prepare("SELECT * FROM users where userName = :userName");
        $stmt->bindParam(':userName', $username);
        $stmt->execute();
        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -115,7 +120,9 @@ class User {
      */
     public function save() {
 
-        global $conn;
+//        global $conn;
+        $db = DbConn::instanceOfDb();
+        $conn=$db->getConnection();
 
         $checkUser = $conn->prepare("SELECT * FROM users WHERE userName = :userName");
         $checkUser->bindParam(':userName', $this->userName);
@@ -143,6 +150,7 @@ class User {
         mkdir("../images/$this->userName", 0755);
         mkdir("../images/$this->userName/postImages", 0755);
         mkdir("../images/$this->userName/profileImages", 0755);
+        mkdir("../images/$this->userName/coverPhoto", 0755);
     }
     public function loadPostPath() :string{
         return "../images/$this->userName/postImages";

@@ -1,8 +1,8 @@
 
 <?php
 session_start();
-require_once "../php/dbconfig.php";
 
+//mkdir("../images/$this->userName/profileImages", 0755);
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header('Location: /cosmovenus/views/Login_Register/loginForm.html');
     exit;
@@ -51,22 +51,28 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             <div class="profile-component">
                 <div class="card-container border border-success">
                     <?php
-
+//                    require ("../php/dbconfig.php");
+                    require ("../php/dbconfig.php");
+//
                     if( $_SESSION['logged_in']){
                         $registered = $_SESSION["user_id"];
-                        // $host = 'localhost';
-                        // $port = 3306;
-                        // $dbname = 'cosmo';
-                        // $username = 'root';
-                        // $password = '1234';
+//                         $host = 'localhost';
+//                         $port = 3306;
+//                         $dbname = 'cosmo';
+//                         $username = 'root';
+//                         $password = '1234';
+//
+//                         try {
+//                             $conn = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4", $username, $password);
+//                             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//                         } catch(PDOException $e) {
+//                             echo "Connection failed: " . $e->getMessage();
+//                             exit;
+//                         }
+//                        $conn =getDbCon();
+                        $db = DbConn::instanceOfDb();
 
-                        // try {
-                        //     $conn = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4", $username, $password);
-                        //     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        // } catch(PDOException $e) {
-                        //     echo "Connection failed: " . $e->getMessage();
-                        //     exit;
-                        // }
+                        $conn=$db->getConnection();
 
 
                         $stmt = $conn->prepare("SELECT profilePicture, profileName, faculty, aboutMe FROM usersDisplayInfo WHERE username = :userName");
@@ -115,7 +121,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         <div class="col-lg-8">
             <div  class="jumbotron jumbotron-fluid d-flex justify-content-center align-items-center">
                 <div  class="container-fluid">
-                    <div style="padding-bottom: 590px;" class="card mb-3 bg-dark border-success jumbo-container">
+                    <div style="padding-bottom: 650px;" class="card mb-3 bg-dark border-success jumbo-container">
 
                         <form style="margin-left: 40px;" id="profileForm"   action="../php/setUpProfile.php" method="post" enctype="multipart/form-data"  >
                         <div class="row justify-content-center sameStyle" style="margin-top: 10px;">
@@ -127,13 +133,23 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 
                                 <div class="row justify-content-center sameStyle" style="margin-top: 10px;">
-                                <div class="col-md-8">
+                            <div class="col-md-8">
                                 <p class="form-label">Profile Picture</p>
                                 <label for="inputFile" class="btn theSameClass form-control">Select Image</label>
                                 <input id="inputFile" accept="image/png, image/jpeg" name="inputfile" class="form-control" " type="file" title="" required>
-                            
+
                             </div>
                         </div>
+
+                            <div class="row justify-content-center sameStyle" style="margin-top: 10px;">
+                                <div class="col-md-8">
+                                    <p class="form-label">Cover Photo</p>
+                                    <label for="inputFileCoverPhoto" class="btn theSameClass form-control">Select Image</label>
+                                    <input id="inputFileCoverPhoto" accept="image/png, image/jpeg" name="inputFileCoverPhoto" class="form-control"  type="file" title="" required>
+
+                                </div>
+                            </div>
+
                             
                         <div class="row justify-content-center sameStyle" style="margin-top: 10px;">
                             <div class="col-md-8">
@@ -153,7 +169,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                             <div class="row justify-content-center sameStyle" style="margin-top: 10px;">
                             <div class="col-md-8">
                                                               <p class="allParagraphs form-label">About Me:</p>    
-                                <textarea class="form-control theSameClass" id="aboutme" name="aboutme" style="height: 150px; resize: none;"></textarea>
+                                <textarea maxlength="40" style="max-height: 100px; min-height: 100px" class="form-control theSameClass" id="aboutme" name="aboutme" style="height: 150px; resize: none;"></textarea>
                             </div>
                             </div>
                             
@@ -245,13 +261,24 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 
 <script>
+function clearForm() {
+    var form = document.getElementById("profileForm");
+    var inputs = form.querySelectorAll('input:not([type="button"]):not([type="submit"])'); // Select all inputs except buttons and submits
+    var textareas = form.getElementsByTagName('textarea');
+
+    for (var i = 0; i < inputs.length; i++) {
+        inputs[i].value = ''; // Clear input values
+    }
+
+    for (var j = 0; j < textareas.length; j++) {
+        textareas[j].value = ''; // Clear textarea values
+    }
+}
+
     $("#inputFile").change(function() {
   filename = this.files[0].name;
-  console.log(filename);
+//   console.log(filename);
 });
-function clearForm() {
-        document.getElementById("profileForm").reset();
-    }
 
     const radioButtons = document.querySelectorAll('input[type="radio"]');
 

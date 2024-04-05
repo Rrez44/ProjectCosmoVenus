@@ -1,4 +1,4 @@
-
+<!--global$conn;-->
 <?php
     require ("../php/dbconfig.php");
 
@@ -61,9 +61,27 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
 
                         <?php
                         //  session_start();
-                        
+
+//                        $host = 'localhost';
+//                        $port = 3306;
+//                        $dbname = 'cosmo';
+//                        $username = 'root';
+//                        $password = '1234';
+//
+//                        try {
+//                            $conn = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4", $username, $password);
+//                            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//                        } catch(PDOException $e) {
+//                            echo "Connection failed: " . $e->getMessage();
+//                            exit;
+//                        }
+                        $db = DbConn::instanceOfDb();
+
+                        $conn=$db->getConnection();
+
+
                         try {
-                            // Assuming $conn is your existing PDO connection object
+
                             $stmt = $conn->prepare("SELECT profilePicture, profileName, faculty, aboutMe FROM usersDisplayInfo WHERE username = ?");
                             $stmt->execute([$otherUsername]);
                             $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -86,17 +104,20 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
                                 Friends
                             </button>
                         </div>
-                        <div class="skills" >
+                        <div style="margin-top: 55px; overflow:hidden;"  class="skills" >
                             <h6>Hobbies</h6>
-                            <ul>
+                            <ul id="HobbiesUL">
                                 <?php
                                 $registered = $_SESSION["user_id"];
+                                $db = DbConn::instanceOfDb();
+
+                                $conn=$db->getConnection();
+
                                 try {
-                                  // Assuming $conn is your existing PDO connection object
                                   $stmt = $conn->prepare("SELECT hobbyName FROM hobbies WHERE username = ?");
                                   $stmt->execute([$registered]);
                                   $hobbies = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                              
+
                                   if ($hobbies) {
                                       foreach ($hobbies as $row) {
                                           echo "<li>{$row['hobbyName']}</li>";
@@ -105,18 +126,47 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
                               } catch (PDOException $e) {
                                   echo "Error: " . $e->getMessage();
                               } ?>
+
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
+
         <div class="col-lg-8">
             <div class="jumbotron jumbotron-fluid d-flex justify-content-center align-items-center">
                 <div class="container-fluid">
                     <div class="card mb-3 bg-dark border-success jumbo-container">
-                        <img class="card-img-top" style="border-radius: 5% 5% 0px 0px; max-height: 200px; object-fit: cover;" src="https://wallpapers.com/images/hd/ultrawide-4k-u69bk8p5x2no56dj.jpg" alt="Card image cap">
+<!--                          <label for="fileInputBanner">-->
+                        <?php
+//                        $registered = $_SESSION["user_id"];
+                        $db = DbConn::instanceOfDb();
+
+                        $conn=$db->getConnection();
+
+                        try {
+                            $stmt = $conn->prepare("SELECT bannerPicture FROM usersDisplayInfo WHERE username = ?");
+                            $stmt->execute([$registered]);
+                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                            $bannerPicturePath = $row['bannerPicture'];
+
+                            echo "<img class='card-img-top' id='bannerPicture' style='border-radius: 5% 5% 0px 0px; max-height: 200px; object-fit: cover;'src='$bannerPicturePath'>";
+
+                        }catch (PDOException $e){
+//                            echo $e;
+                        }
+                        ?>
+<!--//                              <img class="card-img-top" id="bannerPicture" style="border-radius: 5% 5% 0px 0px; max-height: 200px; object-fit: cover;" src="https://wallpapers.com/images/hd/ultrawide-4k-u69bk8p5x2no56dj.jpg" alt="Card image cap">-->
+<!--                          </label>-->
+<!--                        <form id="uploadForm" method="post" action="profile.php" enctype="multipart/form-data">-->
+<!--                        <input type="file" id="fileInputBanner" name="fileInputBanner" style="display: none">-->
+<!--                        </form>-->
                         <div class="card-body">
-                          <h5 class="card-title">@rrez44</h5>
+                          <?php
+
+                          echo "<h5 class='card-title'>@$otherUsername</h5>"
+                          ?>
+                          <!-- <h5 class="card-title">@rrez44</h5> -->
                             <hr>
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-3 col-md-3 col-sm-6 small-screen-query d-flex justify-content-center">
@@ -168,7 +218,22 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
     </div>
     <div class="container-fluid">
       <div class="d-flex flex-wrap justify-content-start mx-5 my-3 button-list">
-        <div class="p-2">
+
+          <?php
+
+          if(isset($_GET['username'])){
+              ?>
+          <div class="p-2">
+              <button class="btn btn-success">Friend List <i class="fa-solid fa-user-group"></i></button>
+          </div>
+          <div class="p-2">
+              <button class="btn btn-success">Share <i class="fa-solid fa-share"></i></button>
+              <?php
+              }else{
+              ?>
+              else{
+                  <div class="p-2">
+
           <button class="btn btn-success " data-toggle="modal" data-target="#addPost">Add post <i class="fa-solid fa-plus" ></i></button>
         </div>
         <div class="p-2">
@@ -180,6 +245,11 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
         <div class="p-2">
           <a href="../views/setUpProfile.php"><button id="setupProfileButton" class="btn btn-success">Set Up profile</button></a>
         </div>
+              }
+              <?php
+              }
+            ?>
+
       </div>
     </div>
 
@@ -272,7 +342,6 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
         });
 
     </script> -->
-
 
     <!-- LOG OUT -->
     <script>

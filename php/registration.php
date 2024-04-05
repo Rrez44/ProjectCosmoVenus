@@ -2,7 +2,6 @@
 require_once 'dbconfig.php';
 require_once 'User.php';
 
-
 $firstName = trim(htmlspecialchars( $_POST['firstName']));
 $lastName = trim(htmlspecialchars( $_POST['lastName']));
 $userName = trim(htmlspecialchars( $_POST['userName']));
@@ -10,8 +9,9 @@ $email = trim(htmlspecialchars( $_POST['email']));
 $dateOfBirth = trim(htmlspecialchars( $_POST['dateOfBirth']));
 $password = trim(htmlspecialchars( $_POST['password']));
 $confirmPassword = trim(htmlspecialchars( $_POST['confirmPassword']));
-if ($password !== $confirmPassword) {
+if ($password !== $confirmPassword  ) {
     echo "Passwords didnt match";
+
 }
 else {
     try {
@@ -19,20 +19,26 @@ else {
 
         if ($rUser->save()) {
             session_start();
-            global $conn;
-            $sql = "INSERT INTO USERSDISPLAYINFO (userName, profileName, faculty, aboutMe, profilePicture) VALUES (?, ?, ?, ?, ?)";
+//            global $conn;
+
+            $db = DbConn::instanceOfDb();
+            $conn=$db->getConnection();
+
+            $sql = "INSERT INTO USERSDISPLAYINFO (userName, profileName, faculty, aboutMe, profilePicture,bannerPicture) VALUES (?, ?, ?, ?, ?,?)";
             $stmt = $conn->prepare($sql);
 
             $profileName = "Profile Name";
             $faculty = "Faculty";
             $aboutMe = "About me";
             $profilePicture = "../images/profileIcons/fire.png";
+            $bannerPicture ="../images/profileIcons/fire.png";
 
             $stmt->bindParam(1, $userName);
             $stmt->bindParam(2, $profileName);
             $stmt->bindParam(3, $faculty);
             $stmt->bindParam(4, $aboutMe);
             $stmt->bindParam(5, $profilePicture);
+            $stmt->bindParam(6, $bannerPicture);
 
 // Execute the prepared statement
             $stmt->execute();
