@@ -17,7 +17,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="../views/profile.php">Visit Profile</a>
-                                <a class="dropdown-item" href="Login_Register/loginForm.html" id="logOut">Log Out</a>
+                                <a class="dropdown-item" href="../php/logout.php" id="logOut">Log Out</a>
                         </li>
                         
                         <li class="nav-item mx-2">

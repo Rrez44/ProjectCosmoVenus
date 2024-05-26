@@ -58,9 +58,10 @@ class UserProfileInfo
         $sql = "SELECT hobbyName FROM hobbies WHERE username = :username";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([':username' => $this->username]);
+
+
         $existingHobbies = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-        // Delete non-existing hobbies
         $sqlDelete = "DELETE FROM hobbies WHERE username = :username AND hobbyName = :hobbyName";
         $stmtDelete = $pdo->prepare($sqlDelete);
 
@@ -70,7 +71,6 @@ class UserProfileInfo
             }
         }
 
-        // Insert new hobbies
         $sqlInsert = "INSERT INTO hobbies (username, hobbyName) VALUES (:username, :hobbyName)";
         $stmtInsert = $pdo->prepare($sqlInsert);
 

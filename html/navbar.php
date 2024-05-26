@@ -16,8 +16,8 @@
                     Profile
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/ProjectCosmoVenus/html/profile.php">Visit Profile</a>
-                    <a class="dropdown-item" href="Login_Register/loginForm.html" id="logOut">Log Out</a>
+                    <a class="dropdown-item" href="/cosmovenus/html/profile.php">Visit Profile</a>
+                    <a class="dropdown-item" href="/P" id="logOut">Log Out</a>
                   </li>
                     <li class="nav-item mx-2">
                       <a class="nav-link" href="#">Wink Back <i class="fa-regular fa-face-smile-wink"></i></i></a>

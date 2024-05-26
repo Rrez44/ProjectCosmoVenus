@@ -1,23 +1,70 @@
 <!--global$conn;-->
 <?php
-    require ("../php/dbconfig.php");
-
+//    require ("../php/dbconfig.php");
+//
 session_start();
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: /cosmovenus/views/Login_Register/loginForm.html');
-    exit;
-}
+////var_dump($_COOKIE['user_logged_id']);
+//
+//
+//
+//    if(isset($_COOKIE["rememberMeToken"])){
+//        $token = $_COOKIE["rememberMeToken"];
+//        var_dump($token);
+//        if(!validateToken($token)){
+//            setcookie("rememberMeToken", "", time() - 3600,"/");
+//            header('Location: ./Login_Register/LoginForm.html');
+//            exit();
+//        }
+//    }else{
+//        header("Location: ../php/logout.php");
+//    }
+//
+//    function validateToken($token): bool
+//    {
+//
+//        $db =DbConn::instanceOfDb();
+//        $conn =$db->getConnection();
+//
+//
+//        $stmt = $conn->prepare("SELECT count(rememberMeToken) as token_count FROM users WHERE rememberMeToken = ?");
+//        $stmt->execute([$token]);
+//        $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+//
+//        if($userInfo['token_count'] ===0){
+//            return false;
+//        } else {
+//            return true;
+//        }
+//    }
+//
+    include_once ("../php/checkCookies.php");
+
+
+
+
+//    if(!isset($_COOKIE['rememberMeToken'])){
+//        header("Location: ../php/logout.php");
+//        exit();
+//    }
+//
+
+
+
+//if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+//    header('Location: /cosmovenus/views/Login_Register/loginForm.html');
+//    exit;
+//
+//}
 
 
 $otherUsername = isset($_GET['username']) ? trim(htmlspecialchars( $_GET['username'])) : null;
 $isOwnProfile = true;
 
-
+//$otherUsername = $_SESSION['user_id'];
 
 
 if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
     $isOwnProfile = false;
-
 } else {
     $otherUsername = $_SESSION["user_id"];
     }
@@ -45,38 +92,52 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
       .skills{
           max-height: 500px;
       }
+
+
+      ::-webkit-scrollbar {
+          width: 0.1em;
+          height: 2em
+      }
+      ::-webkit-scrollbar-button {
+          background: #ccc
+      }
+      ::-webkit-scrollbar-track-piece {
+          background: #888
+      }
+      ::-webkit-scrollbar-thumb {
+          background: #eee
+      }
     </style>
 </head>
 <body>
     <div class="container-fluid">
         <?php
-        require_once("../views/navbar.php")
+        require_once("../views/navbar.php");
+        $userOnline ="";
+        $backgroundColor ="";
+        if(isset($_GET["username"])) {
+
+
+            if (checkOnline($_GET["username"])) {
+                $userOnline = "border-success";
+                $backgroundColor = "#1DB954";
+            } else {
+                $backgroundColor = "#dc3545";
+                $userOnline = "border-danger";
+            }
+        }else{
+            $userOnline = "border-success";
+        }
         ?>
         <!-- NAVEND -->
         <!-- PROFILE COMPONENT STARTS HERE -->
         <div class="row justify-content-center">
             <div class="col-lg-3 d-flex justify-content-center">
                 <div class="profile-component"  >
-                    <div class="card-container border border-success">
+                    <div class="card-container border <?php echo "$userOnline"; ?>">
 
                         <?php
-                        //  session_start();
-
-//                        $host = 'localhost';
-//                        $port = 3306;
-//                        $dbname = 'cosmo';
-//                        $username = 'root';
-//                        $password = '1234';
-//
-//                        try {
-//                            $conn = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4", $username, $password);
-//                            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//                        } catch(PDOException $e) {
-//                            echo "Connection failed: " . $e->getMessage();
-//                            exit;
-//                        }
                         $db = DbConn::instanceOfDb();
-
                         $conn=$db->getConnection();
 
 
@@ -87,7 +148,7 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
                             $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
                         
                             if ($userInfo) {
-                                echo "<img src='{$userInfo['profilePicture']}' class='img-fluid round' alt='Profile Picture'>";
+                                echo "<img src='{$userInfo['profilePicture']}' class='img-fluid round $userOnline '  alt='Profile Picture'>";
                                 echo "<h3>{$userInfo['profileName']}</h3>";
                                 echo "<h6>{$userInfo['faculty']}</h6>";
                                 echo "<p>{$userInfo['aboutMe']}</p>";
@@ -96,16 +157,16 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
                             echo "Error: " . $e->getMessage();
                         }
                         ?>                       
-                        <div class="buttons">
-                            <button class="primary">
+                        <div  class="buttons">
+                            <button style="background-color:<?php echo "$backgroundColor"?>"  class="primary <?php echo "$userOnline"?> ">
                                 Message
                             </button>
-                            <button class="primary ghost">
+                            <button class="primary ghost <?php echo "$userOnline"?>">
                                 Friends
                             </button>
                         </div>
-                        <div style="margin-top: 55px; overflow:hidden;"  class="skills" >
-                            <h6>Hobbies</h6>
+                        <div style="margin-top: 55px; overflow:hidden;background-color:  <?php echo "$backgroundColor"; ?>"   class="skills" >
+                            <h6 >Hobbies</h6>
                             <ul id="HobbiesUL">
                                 <?php
                                 $registered = $_SESSION["user_id"];
@@ -134,12 +195,11 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
             </div>
 
         <div class="col-lg-8">
+
             <div class="jumbotron jumbotron-fluid d-flex justify-content-center align-items-center">
                 <div class="container-fluid">
-                    <div class="card mb-3 bg-dark border-success jumbo-container">
-<!--                          <label for="fileInputBanner">-->
+                    <div class="card mb-3 bg-dark  jumbo-container <?php echo "$userOnline" ?>">
                         <?php
-//                        $registered = $_SESSION["user_id"];
                         $db = DbConn::instanceOfDb();
 
                         $conn=$db->getConnection();
@@ -153,20 +213,13 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
                             echo "<img class='card-img-top' id='bannerPicture' style='border-radius: 5% 5% 0px 0px; max-height: 200px; object-fit: cover;'src='$bannerPicturePath'>";
 
                         }catch (PDOException $e){
-//                            echo $e;
                         }
                         ?>
-<!--//                              <img class="card-img-top" id="bannerPicture" style="border-radius: 5% 5% 0px 0px; max-height: 200px; object-fit: cover;" src="https://wallpapers.com/images/hd/ultrawide-4k-u69bk8p5x2no56dj.jpg" alt="Card image cap">-->
-<!--                          </label>-->
-<!--                        <form id="uploadForm" method="post" action="profile.php" enctype="multipart/form-data">-->
-<!--                        <input type="file" id="fileInputBanner" name="fileInputBanner" style="display: none">-->
-<!--                        </form>-->
                         <div class="card-body">
                           <?php
 
                           echo "<h5 class='card-title'>@$otherUsername</h5>"
                           ?>
-                          <!-- <h5 class="card-title">@rrez44</h5> -->
                             <hr>
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-3 col-md-3 col-sm-6 small-screen-query d-flex justify-content-center">
@@ -218,6 +271,9 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
     </div>
     <div class="container-fluid">
       <div class="d-flex flex-wrap justify-content-start mx-5 my-3 button-list">
+          <!-- Add buttons for sorting -->
+<!--          <button class="btn btn-primary sort-btn" data-sort-type="likes">Sort by Likes</button>-->
+<!--          <button class="btn btn-primary sort-btn" data-sort-type="date">Sort by Date</button>-->
 
           <?php
 
@@ -231,7 +287,7 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
               <?php
               }else{
               ?>
-              else{
+
                   <div class="p-2">
 
           <button class="btn btn-success " data-toggle="modal" data-target="#addPost">Add post <i class="fa-solid fa-plus" ></i></button>
@@ -239,13 +295,23 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
         <div class="p-2">
           <button class="btn btn-success">Friend List <i class="fa-solid fa-user-group"></i></button>
         </div>
-        <div class="p-2">
+
+
+                  <div class="p-2">
           <button class="btn btn-success">Share <i class="fa-solid fa-share"></i></button>
         </div>
+
         <div class="p-2">
           <a href="../views/setUpProfile.php"><button id="setupProfileButton" class="btn btn-success">Set Up profile</button></a>
         </div>
-              }
+                  <!-- Add radio buttons for sorting -->
+
+                  <select style="width: 200px; height: 40px; margin-top: 8px; background-color:#198754; border-color: #198754; color: white"  class="form-select sort-select">
+                      <option value="likes">Sort by Likes</option>
+                      <option value="date">Sort by Date</option>
+                      <option value="alphabetical">Sort Alphabetical </option>
+                      <option value="alphabeticalReverse">Sort AlphabeticalReverse </option>
+                  </select>
               <?php
               }
             ?>
@@ -352,7 +418,8 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
                     type: "POST",
                     url: "../php/logout.php",
                     success: function(response) {
-                      window.location.href = '../views/Login_Register/loginForm.html';
+                        window.location.href = '../php/logout.php';
+                      // window.location.href = '../views/Login_Register/loginForm.html';
                     }
 
                 });
@@ -362,24 +429,48 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
 
 <!--    load posts-->
     <script>
-        $(document).ready(function() {
-            var profileUsername = '<?php echo $otherUsername; ?>';
-            function loadPosts() {
+
+        // function setSortType(sortValue) {
+        //     $('#sortType').val(sortValue);
+        //     loadPosts();
+        // }
+        // $(document).ready(function() {
+        var currentSortType = 'likes'; // Global variable to store current sorting type
+
+        var profileUsername = '<?php echo $otherUsername; ?>';
+
+            function loadPost() {
+                // var sortType = $('#sortType').val();
+
                 $.ajax({
                     type: "POST",
                     url: "../php/loadPosts.php",
-                    data: {username: profileUsername},
-                    success: function(response) {
-                        $('#postContainer').append(response);
+                    data: {username: profileUsername,sortType: currentSortType},
+                    success: function (response) {
+                        $('#postContainer').html(response); // Replace old posts with new ones
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         console.error(xhr.responseText);
                     }
                 });
             }
+        // }
+        loadPost();
 
-            loadPosts();
+        // Function to set sorting type and reload posts
+        function setSortType(sortValue) {
+            currentSortType = sortValue;
+            loadPost(); // Reload posts with new sorting type
+        }
+
+        // Event listener for button clicks
+        $('.sort-select').change(function() {
+            var sortType = $(this).val();
+            setSortType(sortType);
         });
+        //     loadPost();
+
+        // });
     </script>
 
 <!--    ADD LIKE AND REMOVE LIKE-->

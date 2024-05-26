@@ -3,10 +3,12 @@
 session_start();
 
 //mkdir("../images/$this->userName/profileImages", 0755);
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: /cosmovenus/views/Login_Register/loginForm.html');
-    exit;
-}
+include_once ("../php/checkCookies.php");
+//
+//if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+//    header('Location: /cosmovenus/views/Login_Register/loginForm.html');
+//    exit;
+//}
 ?>
 
 
@@ -28,13 +30,22 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     <link rel="stylesheet" href="../css/profilePictureComponent.css">
     <link rel="stylesheet" href="../css/SetUpProfile/setupprofile.css">
 
-    <!-- <style>
-        .custom-input{
-            color: green;
+    <style>
+
+        ::-webkit-scrollbar {
+            width: 0.1em;
+            height: 2em
         }
-
-    </style> -->
-
+        ::-webkit-scrollbar-button {
+            background: #ccc
+        }
+        ::-webkit-scrollbar-track-piece {
+            background: #888
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #eee
+        }
+    </style>
     
 </head>
 <body>
@@ -52,7 +63,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                 <div class="card-container border border-success">
                     <?php
 //                    require ("../php/dbconfig.php");
-                    require ("../php/dbconfig.php");
+//                    require ("../php/dbconfig.php");
 //
                     if( $_SESSION['logged_in']){
                         $registered = $_SESSION["user_id"];

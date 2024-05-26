@@ -5,6 +5,8 @@ session_start();
 include_once "UserProfileInfo.php";
 include_once "dbconfig.php";
 
+var_dump($_SESSION["user_id"]);
+
 
 $db = DbConn::instanceOfDb();
 
