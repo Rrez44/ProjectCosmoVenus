@@ -1,6 +1,7 @@
 <?php
 require_once 'dbconfig.php';
 require_once 'User.php';
+require_once 'AutomaticEmail.php';
 
 $firstName = trim(htmlspecialchars( $_POST['firstName']));
 $lastName = trim(htmlspecialchars( $_POST['lastName']));
@@ -51,7 +52,9 @@ else {
             $stmt->bindParam(5, $profilePicture);
             $stmt->bindParam(6, $bannerPicture);
 
-// Execute the prepared statement
+
+
+
             $stmt->execute();
             $_SESSION['logged_in'] = true;
             $_SESSION['user_id'] = $userName;

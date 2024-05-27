@@ -1,5 +1,7 @@
 <?php
 
+require_once "FailedToLoginException.php";
+require_once "AutomaticEmail.php";
 //use Random\RandomException;
 
 class User
@@ -120,7 +122,15 @@ class User
         session_start();
         $logAttempt = User::getUser($username);
         if ($logAttempt == NULL) {
-            echo "Log in unsuccessful";
+//            echo "Log in unsuccessful";
+            try {
+                throw new FailedToLogin("Fjalëkalimi ose Username i Gabuar");
+            } catch (FailedToLogin $e) {
+                $msg = $e->getMessage();
+                echo "<script>alert('$msg');</script>";
+                echo "<script>window.location.href = '/cosmovenus/views/Login_Register/loginForm.html';</script>";
+
+            }
         } else {
 
             if (password_verify($password, $logAttempt->getPassword())) {
@@ -129,8 +139,16 @@ class User
                 self::setCookie($logAttempt, $username, true);
                 header('Location: /cosmovenus/views/profile.php');
             } else {
-                echo "Failed to log in";
+                try {
+                    throw new FailedToLogin("Fjalëkalimi ose Username i Gabuar");
+                } catch (FailedToLogin $e) {
+                    $msg = $e->getMessage();
+                    echo "<script>alert('$msg');</script>";
+                    echo "<script>window.location.href = '/cosmovenus/views/Login_Register/loginForm.html';</script>";
+
+                }
             }
+
         }
     }
 
@@ -184,6 +202,9 @@ class User
 
 
         $registration = $conn->prepare("INSERT INTO users (firstName, lastName, userName, email, dateOfBirth,password) VALUES (:firstName, :lastName, :userName, :email, :dateOfBirth,:password)");
+
+        sendMail($this->email);
+
 
         $registration->bindParam(':firstName', $this->firstName);
         $registration->bindParam(':lastName', $this->lastName);
