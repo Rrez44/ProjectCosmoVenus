@@ -2,6 +2,12 @@
 require_once 'dbconfig.php';
 require_once 'User.php';
 require_once 'AutomaticEmail.php';
+require_once 'CustmoErrorHandeling.php';
+require_once "Log/RegisterLog.php";
+
+
+
+
 
 $firstName = trim(htmlspecialchars( $_POST['firstName']));
 $lastName = trim(htmlspecialchars( $_POST['lastName']));
@@ -17,7 +23,11 @@ try {
 } catch (Exception $e) {
 }
 if ($password !== $confirmPassword  ) {
-    echo "Passwords didnt match";
+//    echo "Passwords didnt match";
+    trigger_error("Passwords didnt match",E_USER_ERROR);
+    echo "<script>window.location.href = '/cosmovenus/views/Login_Register/registerForm.html';</script>";
+
+
 
 }
 else {
@@ -54,7 +64,6 @@ else {
 
 
 
-
             $stmt->execute();
             $_SESSION['logged_in'] = true;
             $_SESSION['user_id'] = $userName;
@@ -65,7 +74,9 @@ else {
             echo "Failed to register user.";
         }
     } catch (Exception $e) {
-        // Now catch the Exception to print the specific error message
         echo "Failed to register user: " . $e->getMessage();
     }
+
+
+
 }

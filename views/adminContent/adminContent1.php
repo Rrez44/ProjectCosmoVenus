@@ -1,4 +1,7 @@
-<?php error_reporting(0); ?>
+
+<?php error_reporting(0);
+//    require_once "../admin.php";
+?>
         <div class="box-container">
 
             <div class="box box1">

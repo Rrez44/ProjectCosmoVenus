@@ -30,8 +30,8 @@ $siteStats->execute();
 
 $result = $siteStats->fetch(PDO::FETCH_ASSOC);
 
-$logCount = $result['log_count'];
-$postsCount = $result['posts'];
+ $logCount = $result['log_count'];
+ $postsCount = $result['posts'];
 $usersCount = $result['users'];
 
 if (!$userInfo['Admin']) {
@@ -169,6 +169,15 @@ if ($userQuery->execute()) {
                     <h3> Report</h3>
                 </div>
 
+                <div class="nav-option ">
+                    <img src=
+                         "https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
+                         class="nav-img"
+                         alt="log">
+                    <h3>User Log</h3>
+                </div>
+
+
                 <div class="nav-option logout">
                     <img src=
                          "https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
@@ -215,6 +224,7 @@ if ($userQuery->execute()) {
             case 1: include_once "./adminContent/adminContent1.php";break;
             case 2: include_once "./adminContent/adminContent2.php";break;
             case 3: include_once  "./adminContent/adminContent3.php";break;
+            case 4: include_once "./adminContent/adminContent4.php";break;
             default: include_once "./adminContent/adminContent1.php";
         }
 

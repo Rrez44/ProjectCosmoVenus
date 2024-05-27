@@ -2,6 +2,8 @@
 
 require_once "FailedToLoginException.php";
 require_once "AutomaticEmail.php";
+require_once "Log/RegisterLog.php";
+require_once "Log/LoginLog.php";
 //use Random\RandomException;
 
 class User
@@ -48,10 +50,10 @@ class User
         if (substr($this->email, -4) !== '.edu') {
             throw new Exception ("Non student account");
         }
-        $regex = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/";
-        if ( !preg_match($regex, $this->password)) {
-            throw  new Exception("Password Should Contain lowercase letters,uppercase letters, numbers and symbols");
-        }
+//        $regex = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/";
+//        if ( !preg_match($regex, $this->password)) {
+//            throw  new Exception("Password Should Contain lowercase letters,uppercase letters, numbers and symbols");
+//        }
 
         if(!preg_match('/^\S+@\S+\.\S+$/', $this->email)){
             throw new ("Email not Valid");
@@ -137,6 +139,8 @@ class User
                 $_SESSION['user_id'] = $logAttempt->getUserName();
                 $_SESSION['logged_in'] = true;
                 self::setCookie($logAttempt, $username, true);
+                $date = date('Y/m/d H:i:s');
+                writeToLoginFile($logAttempt->userName,$logAttempt->email,$date);
                 header('Location: /cosmovenus/views/profile.php');
             } else {
                 try {
@@ -203,6 +207,8 @@ class User
 
         $registration = $conn->prepare("INSERT INTO users (firstName, lastName, userName, email, dateOfBirth,password) VALUES (:firstName, :lastName, :userName, :email, :dateOfBirth,:password)");
 
+        $date = date('Y/m/d H:i:s');
+        writeToRegisterFile($this->userName,$this->email,$date);
         sendMail($this->email);
 
 
