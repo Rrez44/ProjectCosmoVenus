@@ -9,7 +9,7 @@
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav mr-auto ">
                         <li class="nav-item active">
-                            <a class="nav-link mx-2" href="/message.html">Message <i class="fa-regular fa-message"></i><span class="sr-only">(current)</span></a>
+                            <a class="nav-link mx-2" href="../views/friends.php">Friends <i class="fa-regular fa-user"></i><span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item dropdown" >
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

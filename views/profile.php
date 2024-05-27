@@ -65,9 +65,13 @@ $isOwnProfile = true;
 
 if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
     $isOwnProfile = false;
-} else {
-    $otherUsername = $_SESSION["user_id"];
+} else if ($otherUsername) {
+    header("Location: /projectcosmovenus/views/profile.php");
+    exit();
     }
+if ($isOwnProfile){
+    $otherUsername = $_SESSION['user_id'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -82,6 +86,8 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="../JS/AddFriend.js" crossorigin="anonymous"></script>
+    <script src="../JS/CheckFriendship.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/profilePictureComponent.css">
     <link rel="stylesheet" href="../css/profile.css">
@@ -156,13 +162,36 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
                         } catch (PDOException $e) {
                             echo "Error: " . $e->getMessage();
                         }
-                        ?>                       
-                        <div  class="buttons">
-                            <button style="background-color:<?php echo "$backgroundColor"?>"  class="primary <?php echo "$userOnline"?> ">
+                        ?>
+                        <?php
+                        $username = isset($_GET['username']) ? $_GET['username'] : null;
+                        ?>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', () => {
+                                const username = '<?php echo $_SESSION['user_id']; ?>';
+                                const friendUsername = '<?php echo $_GET['username']; ?>';
+                                updateButton(username, friendUsername);
+                            });
+                        </script>
+                        </script>
+
+                        <div class="buttons" style="<?php echo isset($_GET['username']) ? '' : 'display:none;' ?>">
+                            <button style="background-color:<?php echo $backgroundColor; ?>" class="primary <?php echo $userOnline; ?>">
                                 Message
                             </button>
-                            <button class="primary ghost <?php echo "$userOnline"?>">
-                                Friends
+                            <button id="friendActionButton" class="primary ghost <?php echo $userOnline; ?>">
+                                Loading...
+                            </button>
+                            <button id="acceptFriendRequestButton" class="primary ghost <?php echo $userOnline; ?>" style="display:none;">
+                                Accept Request
+                            </button>
+                            <button id="declineFriendRequestButton" class="primary ghost <?php echo $userOnline; ?>" style="display:none;">
+                                Decline Request
+                            </button>
+                        </div>
+                        <div class="buttons" style="<?php echo isset($username) ? 'display:none;' : '' ?>">
+                            <button style="background-color:<?php echo $backgroundColor; ?>" class="primary <?php echo $userOnline; ?>">
+                                Message
                             </button>
                         </div>
                         <div style="margin-top: 55px; overflow:hidden;background-color:  <?php echo "$backgroundColor"; ?>"   class="skills" >
@@ -536,7 +565,7 @@ if ($otherUsername && $otherUsername != $_SESSION['user_id']) {
 
                 // AJAX call to load single post
                 $.ajax({
-                    url: '/CosmoVenus/php/loadSinglePost.php',
+                    url: '../php/loadSinglePost.php',
                     type: 'POST',
                     data: { postId: postId },
                     dataType: 'json',
