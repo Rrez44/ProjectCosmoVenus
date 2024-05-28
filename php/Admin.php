@@ -12,7 +12,7 @@ class UserAdmin extends User
 
     public function __construct($firstName, $lastName, $userName, $email, $dateOfBirth, $password)
     {
-        parent::__construct($firstName, $lastName, $userName, $email, $dateOfBirth, $password);
+        parent::__construct($firstName, $lastName, $userName, $email, $dateOfBirth, $password,false);
         $this->db = DbConn::instanceOfDb();
         $this->conn = $this->db->getConnection();
         if (!isset($_SESSION['userGroups'])) {

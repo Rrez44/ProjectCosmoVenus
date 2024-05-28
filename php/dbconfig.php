@@ -30,35 +30,24 @@
             $dbname = 'cosmo';
             $username = 'root';
             $password = '1234';
-
             try {
                 $this->conn = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4", $username, $password);
                 $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
                 return $this->conn;
             } catch (PDOException $e) {
                 echo "Connection failed: " . $e->getMessage();
                 exit;
             }
-
-        }
-
-        public static function instanceOfDb(){
+        }public static function instanceOfDb(){
             if(self::$instance ==null){
                 self::$instance = new self();
-
             }
-                return self::$instance;
-
+                return self::$instance ;
         }
-
         public function getConnection(){
             return $this->conn;
         }
 
     }
 
-
-
-//}
 ?>

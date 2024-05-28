@@ -50,10 +50,10 @@ class User
         if (substr($this->email, -4) !== '.edu') {
             throw new Exception ("Non student account");
         }
-//        $regex = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/";
-//        if ( !preg_match($regex, $this->password)) {
-//            throw  new Exception("Password Should Contain lowercase letters,uppercase letters, numbers and symbols");
-//        }
+        $regex = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/";
+        if ( !preg_match($regex, $this->password)) {
+            throw  new Exception("Password Should Contain lowercase letters,uppercase letters, numbers and symbols");
+        }
 
         if(!preg_match('/^\S+@\S+\.\S+$/', $this->email)){
             throw new ("Email not Valid");
@@ -124,8 +124,7 @@ class User
         session_start();
         $logAttempt = User::getUser($username);
         if ($logAttempt == NULL) {
-//            echo "Log in unsuccessful";
-            try {
+           try {
                 throw new FailedToLogin("Fjalëkalimi ose Username i Gabuar");
             } catch (FailedToLogin $e) {
                 $msg = $e->getMessage();
@@ -203,7 +202,6 @@ class User
         if ($checkUser->rowCount() > 0) {
             throw new Exception("Username already exists.");
         }
-
 
         $registration = $conn->prepare("INSERT INTO users (firstName, lastName, userName, email, dateOfBirth,password) VALUES (:firstName, :lastName, :userName, :email, :dateOfBirth,:password)");
 

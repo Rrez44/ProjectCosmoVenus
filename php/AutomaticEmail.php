@@ -3,14 +3,10 @@
 
 function sendMail($to) {
 
-
-    $msg = "HELL WORLD";
-
     ini_set('display_errors', 1);
     ini_set('log_errors', 1);
     ini_set("SMTP", "ssl://smtp.gmail.com");
     ini_set("smtp_port", 587);
-    $headers = 'From: sender@example.com';
 
     $message = '
 <html>
@@ -44,7 +40,6 @@ function sendMail($to) {
 </html>
 ';
 
-// Set headers for HTML email
     $headers = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
     $headers .= 'From: cosmovenussystem@example.com' . "\r\n";

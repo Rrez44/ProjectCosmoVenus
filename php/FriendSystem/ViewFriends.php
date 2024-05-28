@@ -2,7 +2,8 @@
 
 include_once '../dbconfig.php';
 
-$username = 'centaur';
+session_start();
+$username =$_SESSION['user_id'];
 
 try {
     $pdo = DbConn::instanceOfDb()->getConnection();

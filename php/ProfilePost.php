@@ -101,7 +101,6 @@ class ProfilePost implements JsonSerializable
      */
     public function save()
     {
-//        global $conn;
         $db = DbConn::instanceOfDb();
         $conn=$db->getConnection();
 
@@ -130,7 +129,6 @@ class ProfilePost implements JsonSerializable
     public static function loadPost($postId): ?ProfilePost
     {
         try {
-//            global $conn;
             $db = DbConn::instanceOfDb();
 
             $conn=$db->getConnection();

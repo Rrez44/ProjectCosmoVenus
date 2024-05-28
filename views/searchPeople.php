@@ -51,7 +51,7 @@
                                         echo '<img src="' . $user['profilePicture'] . '" class="img-fluid round" alt="Profile Picture">';
                                         echo '<h3 style="margin-top: 25px;">' . $user['profileName'] . '</h3>';
                                         echo '<div class="buttons" style="margin-top: 50px;">';
-                                        echo '<button class="primary equalWidth">Add Friend</button>';
+//                                        echo '<button class="primary equalWidth">Add Friend</button>';
                                         echo '</div>';
                                         echo '<div class="buttons" style="margin-top: 10px;">';
                                         echo '<a href="../views/profile.php?username=' . urlencode($user['username']) . '"><button class="primary ghost equalWidth">Visit Profile</button></a>';
@@ -66,8 +66,6 @@
                             } catch (PDOException $e) {
                                 echo "Error: " . $e->getMessage();
                             }
-
-
                         ?>
 
         </div> 

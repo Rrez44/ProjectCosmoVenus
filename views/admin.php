@@ -153,13 +153,13 @@ if ($userQuery->execute()) {
                     <h3>User</h3>
                 </div>
 
-                <div class="nav-option">
-                    <img src=
-                         "https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png"
-                         class="nav-img"
-                         alt="articles">
-                    <h3>Groups</h3>
-                </div>
+<!--                <div class="nav-option">-->
+<!--                    <img src=-->
+<!--                         "https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png"-->
+<!--                         class="nav-img"-->
+<!--                         alt="articles">-->
+<!--                    <h3>Groups</h3>-->
+<!--                </div>-->
 
                 <div class="nav-option">
                     <img src=
@@ -171,7 +171,7 @@ if ($userQuery->execute()) {
 
                 <div class="nav-option ">
                     <img src=
-                         "https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
+                         "https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png"
                          class="nav-img"
                          alt="log">
                     <h3>User Log</h3>
@@ -184,6 +184,8 @@ if ($userQuery->execute()) {
                          class="nav-img"
                          alt="logout">
                     <h3>Logout</h3>
+
+
                 </div>
 
             </div>
@@ -222,9 +224,10 @@ if ($userQuery->execute()) {
 
         switch ($_GET['loadState']){
             case 1: include_once "./adminContent/adminContent1.php";break;
-            case 2: include_once "./adminContent/adminContent2.php";break;
-            case 3: include_once  "./adminContent/adminContent3.php";break;
-            case 4: include_once "./adminContent/adminContent4.php";break;
+//            case 2: include_once "./adminContent/adminContent2.php";break;
+            case 2: include_once  "./adminContent/adminContent3.php";break;
+            case 3: include_once "./adminContent/adminContent4.php";break;
+//            case 4: include_once header("");break;
             default: include_once "./adminContent/adminContent1.php";
         }
 
@@ -300,6 +303,28 @@ if ($userQuery->execute()) {
             window.history.pushState({path:newUrl},'',newUrl);
         }
     </script>
+
+    <script>
+
+
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            // Make a request to the logout PHP script
+            fetch('/path/to/your/logout.php', {
+                method: 'POST', // Use POST method if necessary
+                credentials: 'same-origin' // This will include cookies with the request
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // If logout was successful, redirect to the login page
+                        window.location.href = '/Login_Register/loginForm.html';
+                    } else {
+                        console.error('Logout failed.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+
 
 </body>
 </html>

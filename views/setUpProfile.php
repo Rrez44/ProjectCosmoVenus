@@ -62,25 +62,9 @@ include_once ("../php/checkCookies.php");
             <div class="profile-component">
                 <div class="card-container border border-success">
                     <?php
-//                    require ("../php/dbconfig.php");
-//                    require ("../php/dbconfig.php");
-//
                     if( $_SESSION['logged_in']){
                         $registered = $_SESSION["user_id"];
-//                         $host = 'localhost';
-//                         $port = 3306;
-//                         $dbname = 'cosmo';
-//                         $username = 'root';
-//                         $password = '1234';
-//
-//                         try {
-//                             $conn = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4", $username, $password);
-//                             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//                         } catch(PDOException $e) {
-//                             echo "Connection failed: " . $e->getMessage();
-//                             exit;
-//                         }
-//                        $conn =getDbCon();
+
                         $db = DbConn::instanceOfDb();
 
                         $conn=$db->getConnection();

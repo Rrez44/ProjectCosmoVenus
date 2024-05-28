@@ -257,7 +257,19 @@ if ($isOwnProfile){
                                         <hr>
                                         <div class="card-body">
                                           <p class="card-text">Friends</p>
-                                          <p class="card-text">432</p>
+                                            <?php
+
+                                            $db = DbConn::instanceOfDb();
+                                            $conn=$db->getConnection();
+                                            $stmt = $conn->prepare("SELECT count(*) as countFriends FROM friends 
+                                                                     inner join users on users.id = friends.user_id
+                                                                     where users.username = ?");
+                                            $stmt->execute([$registered]);
+                                            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                                            $countFriends = $result['countFriends'];
+                                            echo " <p class='card-text'>$countFriends</p>"
+                                            ?>
+<!--                                          <p class="card-text">432</p>-->
                                         </div>
                                       </div>
                                 </div>
@@ -309,12 +321,13 @@ if ($isOwnProfile){
           if(isset($_GET['username'])){
               ?>
           <div class="p-2">
-              <button class="btn btn-success">Friend List <i class="fa-solid fa-user-group"></i></button>
+<!--              <a href="friends.php"><button class="btn btn-success">Friend List <i class="fa-solid fa-user-group"></i></button></a>-->
           </div>
           <div class="p-2">
               <button class="btn btn-success">Share <i class="fa-solid fa-share"></i></button>
               <?php
               }else{
+
               ?>
 
                   <div class="p-2">
@@ -322,7 +335,7 @@ if ($isOwnProfile){
           <button class="btn btn-success " data-toggle="modal" data-target="#addPost">Add post <i class="fa-solid fa-plus" ></i></button>
         </div>
         <div class="p-2">
-          <button class="btn btn-success">Friend List <i class="fa-solid fa-user-group"></i></button>
+                          <a href="friends.php"><button class="btn btn-success">Friend List <i class="fa-solid fa-user-group"></i></button></a>
         </div>
 
 
@@ -470,7 +483,6 @@ if ($isOwnProfile){
 
             function loadPost() {
                 // var sortType = $('#sortType').val();
-
                 $.ajax({
                     type: "POST",
                     url: "../php/loadPosts.php",

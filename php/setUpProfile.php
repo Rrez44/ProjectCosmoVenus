@@ -18,11 +18,21 @@ $hobbies4 = $_POST["check-substitution-4"] ?? null;
 
 $userRegistered = $_SESSION["user_id"];
 
-$allHobbies1 = [$hobbies1, $hobbies2, $hobbies3, $hobbies4];
-$allHobbies = array_filter($allHobbies1, function ($value) {
-    return $value != null;
-});
-$allHobbies = array_values($allHobbies);
+//$allHobbies1 = [$hobbies1, $hobbies2, $hobbies3, $hobbies4];
+//$allHobbies = array_filter($allHobbies1, function ($value) {
+//    return $value != null;
+//});
+function processHobbies(&$hobbies) {
+    $hobbies = array_filter($hobbies, function ($value) {
+        return $value != null;
+    });
+    $hobbies = array_values($hobbies);
+}
+
+$allHobbies = [$hobbies1, $hobbies2, $hobbies3, $hobbies4];
+processHobbies($allHobbies);
+
+//$allHobbies = array_values($allHobbies);
 
 $profileName = trim(htmlspecialchars( $_POST["username"]));
 $faculty = trim(htmlspecialchars($_POST['faculty']));
@@ -31,6 +41,7 @@ $aboutme = trim(htmlspecialchars($_POST['aboutme']));
 
 
 $targetDirectory = "../images/" . $userRegistered . "/profileImages/";
+
 if (isset($_FILES["inputfile"])) {
     $targetFile = basename($_FILES["inputfile"]["name"]);
     echo "Target file:$targetFile";
