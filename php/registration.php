@@ -37,9 +37,11 @@ else {
         if ($rUser->save()) {
             session_start();
             $rUser->saveToken($userName);
-            global $token;
+//            global $token;
+
             $expire = time() +10000;
-            setcookie("rememberMeToken", $token, $expire, "/");
+            echo "token:".$rUser::getGlobalReference();
+            setcookie("rememberMeToken", $rUser::getGlobalReference(), $expire, "/");
 
             $db = DbConn::instanceOfDb();
             $conn=$db->getConnection();

@@ -21,6 +21,8 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/message.css">
+
+
 </head>
 <body>
 <div class="container-fluid">
@@ -203,6 +205,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                         console.log("Parsed response:", response);
 
                         if (response.status === 'success') {
+
                             button.text("Unmatch").removeClass("btn-success").addClass("btn-danger");
                             button.data("matched", true);
                         } else {
@@ -253,7 +256,6 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             event.preventDefault();
             $(".card-header .nav-tabs .nav-link").removeClass('active');
             $(this).addClass('active');
-
             let filter = $(this).html();
             if (filter == "Online") {
                 $("#card-title").html("Online");
@@ -269,5 +271,9 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         loadFriends("All friends");
     });
 </script>
+
+
+
+
 
 </html>

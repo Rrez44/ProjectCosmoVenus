@@ -85,12 +85,13 @@ class User
      */
     public function saveToken($username)
     {
-        global $token;
+        $token= &self::getGlobalReference();
         $token = bin2hex(random_bytes(32));
         $db = DbConn::instanceOfDb();
         $conn = $db->getConnection();
         $stmt = $conn->prepare("UPDATE users SET rememberMeToken = ? WHERE userName = ?");
-        $stmt->execute([$token, $username]);
+        echo "save:".self::getGlobalReference();
+        $stmt->execute([self::getGlobalReference(), $username]);
     }
 
     public static function getUser($username)
@@ -109,9 +110,14 @@ class User
         }
     }
 
+    public static function &getGlobalReference() {
+        global $token;
+        return $token;
+    }
+
     public static function setCookie($logAttempt, $username, $logedOrRegister)
     {
-        global $token;
+        $token =&self::getGlobalReference();
         $expire = time() + 100000;
         if ($logedOrRegister) {
             $logAttempt->saveToken($username);

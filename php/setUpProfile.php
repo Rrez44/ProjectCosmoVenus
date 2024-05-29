@@ -32,7 +32,7 @@ function processHobbies(&$hobbies) {
 $allHobbies = [$hobbies1, $hobbies2, $hobbies3, $hobbies4];
 processHobbies($allHobbies);
 
-//$allHobbies = array_values($allHobbies);
+$hobbies1 = $hobbies2 = $hobbies3 = $hobbies4 = null;
 
 $profileName = trim(htmlspecialchars( $_POST["username"]));
 $faculty = trim(htmlspecialchars($_POST['faculty']));
@@ -65,6 +65,8 @@ if (isset($_FILES["inputFileCoverPhoto"])) {
 $targetPathCoverPhoto = $targetDirectoryCoverPhoto . $targetFileCoverPhoto;
 //echo "TargetPATH:" .$targetPathCoverPhoto;
 move_uploaded_file($_FILES["inputFileCoverPhoto"]["tmp_name"], $targetPathCoverPhoto);
+
+unset($_FILES["inputFileCoverPhoto"]);
 
 $userProfileInfo = new userProfileInfo($userRegistered, $profileName, $faculty, $aboutme, $targetPath, $allHobbies,$targetPathCoverPhoto);
 
