@@ -73,63 +73,63 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 <script>
     $(document).ready(() => {
         // Function to load friends
-        function loadFriends(filter) {
-            $.ajax({
-                type: 'POST',
-                url: '../php/FriendSystem/ViewFriends.php', // Adjust the path as needed
-                data: { user_id: '<?php echo $_SESSION['user_id']; ?>' }, // Ensure the user_id is correctly passed as a string
-                success: function(response) {
-                    console.log(response); // Log the raw response
-                    let friends = JSON.parse(response);
-                    console.log(friends); // Log the parsed response to check its structure
+            function loadFriends(filter) {
+                $.ajax({
+                    type: 'POST',
+                    url: '../php/FriendSystem/ViewFriends.php', // Adjust the path as needed
+                    data: { user_id: '<?php echo $_SESSION['user_id']; ?>' }, // Ensure the user_id is correctly passed as a string
+                    success: function(response) {
+                        console.log(response); // Log the raw response
+                        let friends = JSON.parse(response);
+                        console.log(friends); // Log the parsed response to check its structure
 
-                    if (!Array.isArray(friends)) {
-                        console.error('The response is not an array:', friends);
-                        return;
-                    }
+                        if (!Array.isArray(friends)) {
+                            console.error('The response is not an array:', friends);
+                            return;
+                        }
 
-                    let filteredFriends = [];
+                        let filteredFriends = [];
 
-                    // Apply filters
-                    if (filter === "Online") {
-                        filteredFriends = friends.filter(friend => friend.rememberMeToken !== null);
-                    } else if (filter === "Recent") {
-                        // Assuming recent means those who became friends most recently
-                        filteredFriends = friends.sort((a, b) => new Date(b.accepted_at) - new Date(a.accepted_at));
-                    } else {
-                        filteredFriends = friends; // All friends
-                    }
+                        // Apply filters
+                        if (filter === "Online") {
+                            filteredFriends = friends.filter(friend => friend.rememberMeToken !== null);
+                        } else if (filter === "Recent") {
+                            // Assuming recent means those who became friends most recently
+                            filteredFriends = friends.sort((a, b) => new Date(b.accepted_at) - new Date(a.accepted_at));
+                        } else {
+                            filteredFriends = friends; // All friends
+                        }
 
-                    // Clear the existing list
-                    $("#friend-list").empty();
+                        // Clear the existing list
+                        $("#friend-list").empty();
 
-                    // Add filtered friends to the list
-                    filteredFriends.forEach(friend => {
-                        let friendComponent = `
-                        <div class="row">
-                            <div class="col d-flex justify-content-start align-items-center friend-component">
-                                <div class="col-2 d-flex align-items-center">
-                                    <img class="img-fluid round" src="${friend.profilePicture}" alt="friend image">
-                                    <p class="friend-name">@${friend.username}</p>
+                        // Add filtered friends to the list
+                        filteredFriends.forEach(friend => {
+                            let friendComponent = `
+                            <div class="row">
+                                <div class="col d-flex justify-content-start align-items-center friend-component">
+                                    <div class="col-2 d-flex align-items-center">
+                                        <img class="img-fluid round" src="${friend.profilePicture}" alt="friend image">
+                                        <p class="friend-name">@${friend.username}</p>
+                                    </div>
+                                    <div class="col-6 d-flex justify-content-center mx-3">
+                                        <p class="last-seen"><i>${new Date(friend.accepted_at).toLocaleString()}</i></p>
+                                    </div>
+                                    <div class="right-content"></div>
+                                    <button class="btn btn-success profile-button" href="../html/profile.html"><i class="fa-regular fa-user"></i></button>
+                                    <button class="btn btn-success message-button">Message <i class="fa-regular fa-message"></i></button>
                                 </div>
-                                <div class="col-6 d-flex justify-content-center mx-3">
-                                    <p class="last-seen"><i>${new Date(friend.accepted_at).toLocaleString()}</i></p>
-                                </div>
-                                <div class="right-content"></div>
-                                <button class="btn btn-success profile-button" href="../html/profile.html"><i class="fa-regular fa-user"></i></button>
-                                <button class="btn btn-success message-button">Message <i class="fa-regular fa-message"></i></button>
                             </div>
-                        </div>
-                        <hr>
-                    `;
-                        $("#friend-list").append(friendComponent);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Failed to fetch friends:', error);
-                }
-            });
-        }
+                            <hr>
+                        `;
+                            $("#friend-list").append(friendComponent);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Failed to fetch friends:', error);
+                    }
+                });
+            }
 
         // Click event for the navigation tabs
         $(".card-header .nav-tabs .nav-link").click(function(event) {

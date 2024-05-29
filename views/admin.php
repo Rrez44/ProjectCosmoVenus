@@ -91,11 +91,11 @@ $admin = new UserAdmin($userInfo['firstName'],$userInfo['lastName'],$userInfo['u
     </div>
 
     <div class="message">
-        <div class="circle"></div>
-        <img src=
-             "https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/8.png"
-             class="icn"
-             alt="">
+<!--        <div class="circle"></div>-->
+<!--        <img src=-->
+<!--             "https://media.geeksforgeeks.org/wp-content/upl5oads/20221210183322/8.png"-->
+<!--             class="icn"-->
+<!--             alt="">-->
         <div class="dp">
             <img src="<?php echo $userInfo["profilePicture"] ?>"
                  class="dpicn"
@@ -183,8 +183,10 @@ if ($userQuery->execute()) {
                          "https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
                          class="nav-img"
                          alt="logout">
-                    <h3>Logout</h3>
 
+                    <a style="text-decoration: none;color: black" href="../php/logout.php">
+                    <h3>Logout</h3>
+                    </a>
 
                 </div>
 
@@ -303,29 +305,6 @@ if ($userQuery->execute()) {
             window.history.pushState({path:newUrl},'',newUrl);
         }
     </script>
-
-    <script>
-
-
-        document.getElementById('logoutButton').addEventListener('click', function() {
-            // Make a request to the logout PHP script
-            fetch('/path/to/your/logout.php', {
-                method: 'POST', // Use POST method if necessary
-                credentials: 'same-origin' // This will include cookies with the request
-            })
-                .then(response => {
-                    if (response.ok) {
-                        // If logout was successful, redirect to the login page
-                        window.location.href = '/Login_Register/loginForm.html';
-                    } else {
-                        console.error('Logout failed.');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        });
-    </script>
-
-
 </body>
 </html>
 
