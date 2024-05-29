@@ -51,7 +51,7 @@ session_start();
 
 
 //if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-//    header('Location: /cosmovenus/views/Login_Register/loginForm.html');
+//    header('Location: /cosmovenus/views/Login_Register/loginForm.php');
 //    exit;
 //
 //}
@@ -453,20 +453,42 @@ if ($isOwnProfile){
 
     <!-- LOG OUT -->
     <script>
-        $(document).ready(function() {
-            $("#logOut").click(function(e) {
-                e.preventDefault()
-                $.ajax({
-                    type: "POST",
-                    url: "../php/logout.php",
-                    success: function(response) {
-                        window.location.href = '../php/logout.php';
-                      // window.location.href = '../views/Login_Register/loginForm.html';
-                    }
+        // $(document).ready(function() {
+        //     $("#logOut").click(function(e) {
+        //         e.preventDefault()
+        //         $.ajax({
+        //             type: "POST",
+        //             url: "../php/logout.php",
+        //             success: function(response) {
+        //                 window.location.href = '../php/logout.php';
+        //               // window.location.href = '../views/Login_Register/loginForm.php';
+        //             }
+        //
+        //         });
+        //     });
+        // });
+        document.addEventListener("DOMContentLoaded", function() {
+            var logOutButton = document.getElementById("logOut");
+            logOutButton.addEventListener("click", function(e) {
+                e.preventDefault();
 
-                });
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "../php/logout.php", true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            window.location.href = "../php/logout.php";
+                            // window.location.href = "../views/Login_Register/loginForm.php";
+                        } else {
+                            console.error("Error: " + xhr.status);
+                            // Handle error case
+                        }
+                    }
+                };
+                xhr.send();
             });
         });
+
     </script>
 
 <!--    load posts-->

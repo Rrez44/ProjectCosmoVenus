@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: /cosmovenus/views/Login_Register/loginForm.html');
+    header('Location: /cosmovenus/views/Login_Register/loginForm.php');
     exit;
 }
 ?>

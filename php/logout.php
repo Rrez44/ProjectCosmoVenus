@@ -21,7 +21,7 @@ function setTokenNull($token){
 
 
 
-header("Location: ../views/Login_Register/loginForm.html");
+header("Location: ../views/Login_Register/loginForm.php");
 
 
 

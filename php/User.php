@@ -129,7 +129,7 @@ class User
             } catch (FailedToLogin $e) {
                 $msg = $e->getMessage();
                 echo "<script>alert('$msg');</script>";
-                echo "<script>window.location.href = '/cosmovenus/views/Login_Register/loginForm.html';</script>";
+                echo "<script>window.location.href = '../views/Login_Register/loginForm.php';</script>";
 
             }
         } else {
@@ -147,7 +147,7 @@ class User
                 } catch (FailedToLogin $e) {
                     $msg = $e->getMessage();
                     echo "<script>alert('$msg');</script>";
-                    echo "<script>window.location.href = '/cosmovenus/views/Login_Register/loginForm.html';</script>";
+                    echo "<script>window.location.href = '../views/Login_Register/loginForm.php';</script>";
 
                 }
             }
