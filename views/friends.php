@@ -201,11 +201,11 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                     console.log("Raw response:", response);
 
                     try {
-                        // Directly use the response as JSON since the PHP script sets the correct header
+                        // Parse the response as JSON
+                        response = typeof response === 'object' ? response : JSON.parse(response);
                         console.log("Parsed response:", response);
 
                         if (response.status === 'success') {
-
                             button.text("Unmatch").removeClass("btn-success").addClass("btn-danger");
                             button.data("matched", true);
                         } else {
@@ -221,6 +221,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                 }
             });
         }
+
 
         function unmatchUser(friendUsername, button) {
             $.ajax({
